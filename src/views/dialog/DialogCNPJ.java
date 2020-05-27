@@ -25,7 +25,8 @@ public class DialogCNPJ extends javax.swing.JDialog {
         initComponents();
         this.chooserNasc.setDate(new Date());
         updateComboBox();
-        this.events();
+        this.formatNumber();
+        this.eventClick();
 
     }
 
@@ -35,9 +36,7 @@ public class DialogCNPJ extends javax.swing.JDialog {
         updateComboBox();
         fields(cnpj);
         this.cancel = cnpj;
-        this.events();
-        this.eventClick();
-
+        this.formatNumber();
     }
 
     private void updateComboBox() {
@@ -49,7 +48,7 @@ public class DialogCNPJ extends javax.swing.JDialog {
         ControlPanel.borderLabel(jpnFields);
     }
 
-    private void events() {
+    private void formatNumber() {
         FormatNumber.formatFieldPoint(fieldCredito, FieldChar.vk_comma);
         this.keyEventChooser();
     }
@@ -833,7 +832,7 @@ public class DialogCNPJ extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<States> cbxUf;
+    private javax.swing.JComboBox<entities.entity.uf.States> cbxUf;
     private com.toedter.calendar.JDateChooser chooserNasc;
     private javax.swing.JCheckBox ckbSituacao;
     private javax.swing.JButton cmdCancelar;
