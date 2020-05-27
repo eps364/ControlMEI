@@ -16,7 +16,7 @@ Framework, library and CASE:
 - Database MySQL And Apache Derby for embedded
 
 ### Information
-The objects for insert will a send application it for generic class the database.
+The objects will send the data for generic class the database.
 
 `````java
 public abstract class Generic<T extends InterValueId> {
