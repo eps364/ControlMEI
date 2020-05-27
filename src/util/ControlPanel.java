@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package util;
 
 import com.toedter.calendar.JDateChooser;
@@ -12,12 +7,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-/**
- *
- * @author colpv
- */
 public class ControlPanel {
 
+    /**
+     * Method responsible for clearing fields
+     * @param pane - waits argument type JPanel
+     */
     public static void clean(JPanel pane) {
 
         Component[] comp = pane.getComponents();
@@ -40,7 +35,7 @@ public class ControlPanel {
         for (Component c : comp) {
             if (c instanceof JLabel) {
                 JLabel label = (JLabel) c;
-                label.setBorder(new EmptyBorder(0,2,0,0));
+                label.setBorder(new EmptyBorder(0, 2, 0, 0));
             }
 
         }

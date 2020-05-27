@@ -9,14 +9,14 @@ public class PercentValue {
     private static double lucro;
 
     /**
-     * @param compra
-     * @param venda
-     * @return
+     * @param purchase - you give type string value
+     * @param sale - you give type string value
+     * @return - return string value
      */
-    public static String percente(String compra, String venda) {
-        if (Double.parseDouble(0 + compra.replace(",", ".")) > 0) {
-            double c = Double.parseDouble(0 + compra.replace(",", "."));
-            PercentValue.venda = Double.parseDouble(0 + venda.replace(",", "."));
+    public static String percente(String purchase, String sale) {
+        if (Double.parseDouble(0 + purchase.replace(",", ".")) > 0) {
+            double c = Double.parseDouble(0 + purchase.replace(",", "."));
+            PercentValue.venda = Double.parseDouble(0 + sale.replace(",", "."));
 
             double value = (PercentValue.venda - c) / c;
             return String.valueOf(new DecimalFormat("0.0#").format(0 + value * 100));
@@ -26,13 +26,13 @@ public class PercentValue {
     }
 
     /**
-     * @param compra
-     * @param percente
-     * @return
+     * @param purchase - you give type string value
+     * @param percente - you give type string value
+     * @return - return string value
      */
-    public static String venda(String compra, String percente) {
+    public static String venda(String purchase, String percente) {
         PercentValue.lucro = Double.parseDouble(0 + percente.replace(",", ".")) / 100;
-        PercentValue.compra = Double.parseDouble(0 + compra.replace(",", "."));
+        PercentValue.compra = Double.parseDouble(0 + purchase.replace(",", "."));
 
         PercentValue.compra += PercentValue.compra * PercentValue.lucro;
         return String.valueOf(new DecimalFormat("0.0#").format(PercentValue.compra));

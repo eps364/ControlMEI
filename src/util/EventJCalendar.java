@@ -8,10 +8,6 @@ public class EventJCalendar {
 
    private static int key;
 
-    /**
-     * @param chooser - retorna um <p>int key</p> comparação entre getKeyCode JDateChooser
-     * @return 
-     */
     public static int keyEventCode(JDateChooser chooser) {
 
         chooser.getDateEditor().getUiComponent().addKeyListener(new KeyListener() {

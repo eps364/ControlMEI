@@ -7,7 +7,6 @@ import impl.ImplCNPJ;
 import impl.ImplCPF;
 import impl.reserved.ImplPerson;
 import java.awt.event.KeyEvent;
-import java.text.SimpleDateFormat;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -37,7 +36,7 @@ public class ClientList extends javax.swing.JDialog {
             model.addRow(new Object[]{
                 c.getId(),
                 c.getRazaoSocial(),
-                new SimpleDateFormat("dd/MM/yyyy").format(c.getNascimento()),
+                new ConvertDate(c.getNascimento()),
                 tipoPessoa(c.getId()),
                 c.getFone(),
                 c.getEmail()
@@ -49,12 +48,11 @@ public class ClientList extends javax.swing.JDialog {
     }
 
     private String tipoPessoa(Integer id) {
-        ImplCNPJ cnpj = new ImplCNPJ();
+        String registro;
         ImplCPF cpf = new ImplCPF();
-        String registro = "";
-
         Cpf pf = cpf.find(Cpf.class, id);
         if (pf == null) {
+            ImplCNPJ cnpj = new ImplCNPJ();
             Cnpj confirm = cnpj.find(Cnpj.class, id);
             registro = confirm.getCnpjNumber();
         } else {
@@ -250,15 +248,11 @@ public class ClientList extends javax.swing.JDialog {
         int value = Integer.parseInt(masterTable.getValueAt(masterTable.getSelectedRow(), 0).toString());
 
         cliente = crud.find(Person.class, value);
+
     }
 
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
+         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -268,12 +262,7 @@ public class ClientList extends javax.swing.JDialog {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(ClientList.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        //</editor-fold>
+     
         java.awt.EventQueue.invokeLater(() -> {
             ClientList dialog = new ClientList(new javax.swing.JFrame(), true);
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {

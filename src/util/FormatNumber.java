@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package util;
 
 import enu.FieldChar;
@@ -12,13 +8,14 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.text.DefaultFormatter;
 
-/**
- *
- * @author colpv
- */
+ // Configure number format
 public class FormatNumber {
 
-    public static void formatFieldPoint(JTextField field, FieldChar ch) {
+   /**
+    * @param field - insert value JTextField
+    * @param fielChar - insert enumeration type FieldChar
+    */
+    public static void formatFieldPoint(JTextField field, FieldChar fielChar) {
 
         field.addKeyListener(new KeyAdapter() {
 
@@ -29,7 +26,7 @@ public class FormatNumber {
                 if (Character.isLetter(ev)) {
                     evt.consume();
                 } else {
-                    switch (ch) {
+                    switch (fielChar) {
 
                         case vk_comma:
                             if (ev < 47 || ev > 57) {
@@ -73,6 +70,9 @@ public class FormatNumber {
 
     }
 
+    /**
+     * @param spinner - Char insert blocked
+     */
     public static void spinnerNumber(JSpinner spinner) {
         JSpinner.NumberEditor jsEditor = (JSpinner.NumberEditor) spinner.getEditor();
         DefaultFormatter formatter = (DefaultFormatter) jsEditor.getTextField().getFormatter();

@@ -1,5 +1,6 @@
 package views;
 
+import entities.entity.Person;
 import entities.entity.SaleItem;
 import entities.entity.product.Stock;
 import impl.ImplProduct;
@@ -73,7 +74,7 @@ public class InternalSale extends javax.swing.JInternalFrame {
         fieldDate = new com.toedter.calendar.JDateChooser();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
-        jTextField1 = new javax.swing.JTextField();
+        fieldClient = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         cmdBuscar1 = new javax.swing.JButton();
 
@@ -268,7 +269,7 @@ public class InternalSale extends javax.swing.JInternalFrame {
                                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel12)
                                     .addGroup(jpnFieldsLayout.createSequentialGroup()
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(fieldClient, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(cmdBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
@@ -301,7 +302,7 @@ public class InternalSale extends javax.swing.JInternalFrame {
                             .addComponent(fieldCodeBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmdBuscar)
                             .addComponent(cbxPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fieldClient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cmdBuscar1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -447,12 +448,16 @@ public class InternalSale extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cmdRemoverActionPerformed
 
     private void cmdBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdBuscar1ActionPerformed
-        ClientList cliente = new ClientList(new javax.swing.JFrame(), true);
-        cliente.setVisible(true);
-//        selectItem(cliente.getCliente());
-        System.out.println(cliente.getCliente());
+        ClientList client = new ClientList(new javax.swing.JFrame(), true);
+        client.setVisible(true);
+        clientSelected(client.getCliente());
+
     }//GEN-LAST:event_cmdBuscar1ActionPerformed
 
+    private void clientSelected(Person person){
+       fieldClient.setText(person.getRazaoSocial());
+    }
+    
     private void selectItem(Stock item) {
         try {
 
@@ -464,7 +469,7 @@ public class InternalSale extends javax.swing.JInternalFrame {
             fieldQtd.setText(String.valueOf(item.getEstoqueQtd()));
             this.estoque = item;
         } catch (NullPointerException e) {
-            ControlPanel.clean(jpnFields);
+//            ControlPanel.clean(jpnFields);
             e.getMessage();
         }
 
@@ -493,6 +498,7 @@ public class InternalSale extends javax.swing.JInternalFrame {
     private javax.swing.JButton cmdConcluir;
     private javax.swing.JButton cmdRemover;
     private javax.swing.JButton cmdSair;
+    private javax.swing.JTextField fieldClient;
     private javax.swing.JTextField fieldCodeBar;
     private javax.swing.JTextField fieldCodicao;
     private com.toedter.calendar.JDateChooser fieldDate;
@@ -516,7 +522,6 @@ public class InternalSale extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField7;

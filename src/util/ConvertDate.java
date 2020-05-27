@@ -1,19 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package util;
 
 import java.text.SimpleDateFormat;
 
-/**
- *
- * @author colpv
- */
+// Convert to date values types
 public class ConvertDate {
 
-    private java.util.Date date;
+    private final java.util.Date date;
 
     public ConvertDate(java.util.Date date) {
 
@@ -21,7 +13,8 @@ public class ConvertDate {
 
     }
 
-    public ConvertDate() {
+    public long convertTime() {
+        return date.getTime();
     }
 
     public static java.sql.Date ConvertDate(java.util.Date date) {
@@ -38,7 +31,7 @@ public class ConvertDate {
         if (date != null) {
             return new java.util.Date(date.getTime());
         }
-
+        
         return null;
     }
 
