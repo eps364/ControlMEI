@@ -8,7 +8,6 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import util.ControlPanel;
-import util.Fields;
 import views.dialog.DialogCNPJ;
 
 public class InternalCNPJ extends javax.swing.JInternalFrame {
@@ -24,6 +23,7 @@ public class InternalCNPJ extends javax.swing.JInternalFrame {
         model = (DefaultTableModel) masterTable.getModel();
         updateTable();
         ControlPanel.borderLabel(jpnFields);
+        
     }
 
     private void updateTable() {

@@ -38,7 +38,7 @@ public class DialogCPF extends javax.swing.JDialog {
 
         updateComboBox();
 
-        this.events();
+        this.formatNumber();
         this.chooserNasc.setDate(new Date());
         this.eventClick();
 
@@ -56,7 +56,7 @@ public class DialogCPF extends javax.swing.JDialog {
 
         this.cancel = cpf;
 
-        this.events();
+        this.formatNumber();
 
     }
 
@@ -74,7 +74,7 @@ public class DialogCPF extends javax.swing.JDialog {
 
     }
 
-    private void events() {
+    private void formatNumber() {
         this.keyEventChooser();
         FormatNumber.formatFieldPoint(fieldCredito, FieldChar.vk_comma);
         FormatNumber.formatFieldPoint(fieldSalario, FieldChar.vk_comma);
@@ -178,7 +178,7 @@ public class DialogCPF extends javax.swing.JDialog {
         jLabel15 = new javax.swing.JLabel();
         fieldCep = new javax.swing.JFormattedTextField();
         jLabel19 = new javax.swing.JLabel();
-        cbxUf = new javax.swing.JComboBox<States>();
+        cbxUf = new javax.swing.JComboBox<entities.entity.uf.States>();
         fieldNomeApelido = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
         fieldProfissao = new javax.swing.JTextField();
@@ -1018,7 +1018,7 @@ public class DialogCPF extends javax.swing.JDialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<States> cbxUf;
+    private javax.swing.JComboBox<entities.entity.uf.States> cbxUf;
     private com.toedter.calendar.JDateChooser chooserNasc;
     private javax.swing.JCheckBox ckbSituacao;
     private javax.swing.JButton cmdCancelar;

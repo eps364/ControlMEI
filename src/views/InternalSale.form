@@ -462,8 +462,8 @@
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="4">
                     <StringItem index="0" value="AVISTA"/>
-                    <StringItem index="1" value="CART&#xc3;O CR&#xc9;DITO"/>
-                    <StringItem index="2" value="CART&#xc3;O DE D&#xc9;BITO"/>
+                    <StringItem index="1" value="CT CR&#xc9;DITO"/>
+                    <StringItem index="2" value="CT DE D&#xc9;BITO"/>
                     <StringItem index="3" value="DUPLICATA"/>
                   </StringArray>
                 </Property>
@@ -490,6 +490,9 @@
               </Properties>
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="fieldDate">
+              <Properties>
+                <Property name="dateFormatString" type="java.lang.String" value="dd/MM/yyyy"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator2">
               <Properties>

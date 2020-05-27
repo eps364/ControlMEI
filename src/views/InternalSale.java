@@ -193,13 +193,15 @@ public class InternalSale extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Pagamento:");
 
-        cbxPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AVISTA", "CARTÃO CRÉDITO", "CARTÃO DE DÉBITO", "DUPLICATA" }));
+        cbxPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AVISTA", "CT CRÉDITO", "CT DE DÉBITO", "DUPLICATA" }));
 
         jLabel9.setText("Parcelamento:");
 
         spnParcela.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100, 1));
 
         jLabel10.setText("Vencimento:");
+
+        fieldDate.setDateFormatString("dd/MM/yyyy");
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 

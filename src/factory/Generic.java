@@ -24,7 +24,7 @@ public abstract class Generic<T extends InterValueId> {
             } else {
                 if (!em.contains(t)) {
                     if (em.find(t.getClass(), t.getId()) == null) {
-                        throw new Exception("Registro não encontrado!");
+                        throw new Exception("Register not found!");
                     }
 
                 }
@@ -33,9 +33,9 @@ public abstract class Generic<T extends InterValueId> {
             }
             em.getTransaction().commit();
         } catch (Exception e) {
-            System.out.println("error de insert: " + e.getMessage());
+            System.out.println("Error insert register: " + e.getMessage());
             if (e.getMessage().contains("Duplicate")) {
-                JOptionPane.showMessageDialog(null, "Duplicação de " + t.getClass().getSimpleName().toUpperCase() + " não permitida.\nVerifique e tente novamente");
+                JOptionPane.showMessageDialog(null, "Duplicate key: " + t.getClass().getSimpleName().toUpperCase() + " with not permission.\nCheck and try again.");
             }
             em.getTransaction().rollback();
         } finally {
@@ -51,7 +51,7 @@ public abstract class Generic<T extends InterValueId> {
         T delete = em.find(c, id);
 
         try {
-            int key = JOptionPane.showConfirmDialog(null, "Você esta presta a deletar definitivame esse registro do banco.\nDeseja continuar?", "DELETAR DADOS DO BANCO", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            int key = JOptionPane.showConfirmDialog(null, "This action will removing definitely object it database.\nWant continue?", "DELETAR DADOS DO BANCO", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (key != JOptionPane.YES_OPTION) {
 
                 return;
@@ -61,7 +61,7 @@ public abstract class Generic<T extends InterValueId> {
             em.getTransaction().commit();
 
         } catch (HeadlessException e) {
-            System.out.println("erro ao deletar: " + e.getMessage());
+            System.out.println("You do not remove product: error some remove -> " + e.getMessage());
         }
 
     }
