@@ -1,7 +1,7 @@
 package views.dialog;
 
-import entities.entity.person.Cpf;
-import entities.entity.uf.States;
+import entity.person.Cpf;
+import entity.uf.State;
 
 import enu.FieldChar;
 
@@ -178,7 +178,7 @@ public class DialogCPF extends javax.swing.JDialog {
         jLabel15 = new javax.swing.JLabel();
         fieldCep = new javax.swing.JFormattedTextField();
         jLabel19 = new javax.swing.JLabel();
-        cbxUf = new javax.swing.JComboBox<entities.entity.uf.States>();
+        cbxUf = new javax.swing.JComboBox<entity.uf.State>();
         fieldNomeApelido = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
         fieldProfissao = new javax.swing.JTextField();
@@ -943,7 +943,7 @@ public class DialogCPF extends javax.swing.JDialog {
 
         cpf.setCidade(fieldCidade.getText().toUpperCase().trim());
 
-        cpf.setEstado((States) cbxUf.getSelectedItem());
+        cpf.setEstado((State) cbxUf.getSelectedItem());
 //        Estado s = new Estado();
 //        s.setNome(e);
 //        System.out.println(s.getId());
@@ -1018,7 +1018,7 @@ public class DialogCPF extends javax.swing.JDialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<entities.entity.uf.States> cbxUf;
+    private javax.swing.JComboBox<entity.uf.State> cbxUf;
     private com.toedter.calendar.JDateChooser chooserNasc;
     private javax.swing.JCheckBox ckbSituacao;
     private javax.swing.JButton cmdCancelar;

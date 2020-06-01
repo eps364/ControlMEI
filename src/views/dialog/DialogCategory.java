@@ -1,6 +1,6 @@
 package views.dialog;
 
-import entities.entity.product.Category;
+import entity.product.Category;
 import impl.ImplCategory;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;

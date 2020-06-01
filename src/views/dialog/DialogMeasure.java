@@ -1,6 +1,6 @@
 package views.dialog;
 
-import entities.entity.product.Measure;
+import entity.product.Measure;
 import impl.ImplMeasure;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;

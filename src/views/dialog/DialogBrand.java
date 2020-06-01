@@ -1,7 +1,7 @@
 package views.dialog;
 
 
-import entities.entity.product.Brand;
+import entity.product.Brand;
 import impl.ImplBrand;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;

@@ -1,11 +1,11 @@
 package views.dialog;
 
-import entities.entity.Person;
-import entities.entity.person.Cnpj;
-import entities.entity.person.Cpf;
+import entity.Person;
+import entity.person.Cnpj;
+import entity.person.Cpf;
 import impl.ImplCNPJ;
 import impl.ImplCPF;
-import impl.reserved.ImplPerson;
+import impl.ImplPerson;
 import java.awt.event.KeyEvent;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;

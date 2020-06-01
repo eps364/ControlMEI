@@ -1,6 +1,6 @@
 package views;
 
-import entities.entity.person.Cnpj;
+import entity.person.Cnpj;
 import impl.ImplCNPJ;
 import java.awt.event.KeyEvent;
 import javax.swing.JFrame;

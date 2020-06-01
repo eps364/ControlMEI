@@ -1,6 +1,6 @@
 package views;
 
-import entities.entity.person.Cpf;
+import entity.person.Cpf;
 import impl.ImplCPF;
 import java.awt.event.KeyEvent;
 import javax.swing.JFrame;

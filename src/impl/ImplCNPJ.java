@@ -1,6 +1,6 @@
 package impl;
 
-import entities.entity.person.Cnpj;
+import entity.person.Cnpj;
 import factory.Generic;
 import java.util.ArrayList;
 import java.util.List;

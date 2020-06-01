@@ -1,8 +1,8 @@
 package views;
 
-import entities.entity.Person;
-import entities.entity.SaleItem;
-import entities.entity.product.Stock;
+import entity.Person;
+import entity.SaleItem;
+import entity.product.Stock;
 import impl.ImplProduct;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;

@@ -1,13 +1,15 @@
 package views.dialog;
 
-import entities.entity.product.Category;
-import entities.entity.product.Brand;
-import entities.entity.product.Measure;
-import entities.entity.product.Stock;
-import entities.entity.product.ProductSection;
+import entity.Person;
+import entity.product.Category;
+import entity.product.Brand;
+import entity.product.Measure;
+import entity.product.Stock;
+import entity.product.ProductSection;
 import enu.FieldChar;
 import impl.ImplCategory;
 import impl.ImplBrand;
+import impl.ImplCNPJ;
 import impl.ImplMeasure;
 import impl.ImplProduct;
 import impl.ImplSection;
@@ -30,7 +32,7 @@ public class DialogProduct extends javax.swing.JDialog {
         initComponents();
         pro = new Stock();
         this.updateComboBox();
-
+        this.eventClick();
     }
 
     public DialogProduct(java.awt.Frame parent, boolean modal, Stock produto) {
@@ -39,17 +41,17 @@ public class DialogProduct extends javax.swing.JDialog {
         this.updateComboBox();
         this.cancel = produto;
         this.fields(produto);
-        this.eventClick();
+
     }
 
     private void eventClick() {
-        boolean isClick = cmdNovo.isEnabled();
+        boolean isClick = cmdNew.isEnabled();
         if (isClick) {
-            cmdNovo.setEnabled(false);
-            cmdCancelar.setEnabled(true);
+            cmdNew.setEnabled(false);
+            cmdCancel.setEnabled(true);
         } else {
-            cmdCancelar.setEnabled(false);
-            cmdNovo.setEnabled(true);
+            cmdCancel.setEnabled(false);
+            cmdNew.setEnabled(true);
         }
     }
 
@@ -57,24 +59,28 @@ public class DialogProduct extends javax.swing.JDialog {
 
         FormatNumber.formatFieldPoint(fieldCompra, FieldChar.vk_comma);
         FormatNumber.formatFieldPoint(fieldVenda, FieldChar.vk_comma);
-        FormatNumber.formatFieldPoint(fieldLucro, FieldChar.vk_comma);
-        FormatNumber.formatFieldPoint(fieldQtd, FieldChar.vk_null);
+        FormatNumber.formatFieldPoint(fieldMargem, FieldChar.vk_comma);
+        FormatNumber.formatFieldPoint(fieldStock, FieldChar.vk_null);
 
         ImplBrand marca = new ImplBrand();
-        cbxMarca.removeAllItems();
-        marca.findAll().forEach(item -> cbxMarca.addItem(item));
+        cbxBrand.removeAllItems();
+        marca.findAll().forEach(item -> cbxBrand.addItem(item));
 
         ImplCategory categoria = new ImplCategory();
-        cbxCategoria.removeAllItems();
-        categoria.findAll().forEach(item -> cbxCategoria.addItem(item));
+        cbxCategory.removeAllItems();
+        categoria.findAll().forEach(item -> cbxCategory.addItem(item));
 
         ImplMeasure unidade = new ImplMeasure();
-        cbxUnidade.removeAllItems();
-        unidade.findAll().forEach(item -> cbxUnidade.addItem(item));
+        cbxUnit.removeAllItems();
+        unidade.findAll().forEach(item -> cbxUnit.addItem(item));
 
         ImplSection secao = new ImplSection();
-        cbxSecao.removeAllItems();
-        secao.findAll().forEach(item -> cbxSecao.addItem(item));
+        cbxProductSection.removeAllItems();
+        secao.findAll().forEach(item -> cbxProductSection.addItem(item));
+
+        ImplCNPJ supplier = new ImplCNPJ();
+        cbxSupplier.removeAllItems();
+        supplier.findAll().forEach(spe -> cbxSupplier.addItem(spe));
 
         crud = new ImplProduct();
 
@@ -85,23 +91,29 @@ public class DialogProduct extends javax.swing.JDialog {
     private void fields(Stock produto) {
         try {
             this.pro = produto;
-            fieldProdutoId.setText(0 + String.valueOf(pro.getId()));
-            fieldDescricao.setText(pro.getProdutoDescricao());
+            fieldProductId.setText(0 + String.valueOf(pro.getId()));
+            fieldDescription.setText(pro.getProdutoDescricao());
             fieldCodeBar.setText(pro.getCodeBar());
-            fieldNotaFiscal.setText(pro.getProdutoNFe());
+            txtObservation.setText(pro.getObservation());
 
             fieldCompra.setText(String.valueOf(pro.getPrecoCompra()).replace(".", ","));
             fieldVenda.setText(String.valueOf(pro.getPrecoVenda()).replace(".", ","));
-            fieldLucro.setText(String.valueOf((pro.getPercente().doubleValue() * 100)).replace(".", ","));
+            fieldMargem.setText(String.valueOf((pro.getPercente().doubleValue() * 100)).replace(".", ","));
 
-            cbxCategoria.getModel().setSelectedItem(pro.getIdCategoria());
-            cbxMarca.getModel().setSelectedItem(pro.getIdMarca());
-            cbxUnidade.getModel().setSelectedItem(pro.getIdMedida());
-            cbxSecao.getModel().setSelectedItem(pro.getIdSecao());
+            cbxCategory.getModel().setSelectedItem(pro.getIdCategoria());
+            cbxBrand.getModel().setSelectedItem(pro.getIdMarca());
+            cbxUnit.getModel().setSelectedItem(pro.getIdMedida());
+            cbxProductSection.getModel().setSelectedItem(pro.getIdSecao());
+            cbxSupplier.getModel().setSelectedItem(pro.getPerson());
 
-            ckbOrigem.setSelected(Boolean.valueOf(pro.getNacional()));
+            checkImported.setSelected(Boolean.valueOf(pro.getNacional()));
 
-            fieldQtd.setText(String.valueOf(pro.getEstoqueQtd()));
+            
+            fieldWarranty.setText(String.valueOf(pro.getWarranty()).replace(".", ","));
+            fieldProfit.setText(String.valueOf(pro.getProfit()).replace(".", ","));
+            fieldCommission.setText(String.valueOf(pro.getCommission()).replace(".", ","));
+            
+            fieldStock.setText(String.valueOf(pro.getEstoqueQtd()));
             checkProduto(pro.getCondicao());
         } catch (Exception e) {
             System.out.println("Error 001-f: " + e.getMessage());
@@ -110,34 +122,42 @@ public class DialogProduct extends javax.swing.JDialog {
     }
 
     private void save() throws Exception {
-        pro.setProdutoDescricao(fieldDescricao.getText().toUpperCase().trim());
+        pro.setProdutoDescricao(fieldDescription.getText().toUpperCase().trim());
         pro.setCodeBar(fieldCodeBar.getText());
-        pro.setProdutoNFe(fieldNotaFiscal.getText());
+        pro.setObservation(txtObservation.getText());
         pro.setPrecoCompra(BigDecimal.valueOf(Double.parseDouble(fieldCompra.getText().replace(",", "."))));
+        Person person = (Person) cbxSupplier.getSelectedItem();
+        pro.setPerson(person);
+        
+        pro.setWarranty(Integer.parseInt(fieldWarranty.getText()));
+        pro.setComission(BigDecimal.valueOf(Double.parseDouble(0+fieldCommission.getText().replace(",", "."))));
+        pro.setProfit(BigDecimal.valueOf(Double.parseDouble(0+fieldProfit.getText().replace(",", "."))));
+        
+        
 
         pro.setPrecoVenda((BigDecimal.valueOf(Double.parseDouble(fieldVenda.getText().replace(",", ".")))));
-        BigDecimal b = BigDecimal.valueOf(Double.parseDouble(fieldLucro.getText().replace(",", ".")) / 100);
+        BigDecimal b = BigDecimal.valueOf(Double.parseDouble(fieldMargem.getText().replace(",", ".")) / 100);
         pro.setPercente(b);
 
-        if (fieldDescricao.getText().isEmpty()) {
+        if (fieldDescription.getText().isEmpty()) {
             throw new Exception("O campo descrição não pode ser vazio.\nVerifique e tente novamente");
         }
-        pro.setEstoqueQtd(Integer.parseInt(0 + fieldQtd.getText()));
+        pro.setEstoqueQtd(Integer.parseInt(0 + fieldStock.getText()));
 
-        pro.setCategoria((Category) cbxCategoria.getSelectedItem());
+        pro.setCategoria((Category) cbxCategory.getSelectedItem());
 
-        pro.setIdMarca((Brand) cbxMarca.getModel().getSelectedItem());
+        pro.setIdMarca((Brand) cbxBrand.getModel().getSelectedItem());
 
-        pro.setIdMedida((Measure) cbxUnidade.getModel().getSelectedItem());
+        pro.setIdMedida((Measure) cbxUnit.getModel().getSelectedItem());
 
-        pro.setIdSecao((ProductSection) cbxSecao.getModel().getSelectedItem());
+        pro.setIdSecao((ProductSection) cbxProductSection.getModel().getSelectedItem());
 
-        pro.setNacional(String.valueOf(ckbOrigem.isSelected()));
+        pro.setNacional(String.valueOf(checkImported.isSelected()));
         String condicao = "Novo";
-        if (rbSemi.isSelected()) {
+        if (rbUsedProduct.isSelected()) {
             condicao = "Seminovo";
 
-        } else if (rbUsado.isSelected()) {
+        } else if (rbOfUsed.isSelected()) {
             condicao = "Usado";
         }
 
@@ -151,13 +171,13 @@ public class DialogProduct extends javax.swing.JDialog {
             char c = value.charAt(0);
             switch (c) {
                 case 'U':
-                    rbUsado.setSelected(true);
+                    rbOfUsed.setSelected(true);
                     break;
                 case 'S':
-                    rbSemi.setSelected(true);
+                    rbUsedProduct.setSelected(true);
                     break;
                 default:
-                    rbNovo.setSelected(true);
+                    rbNew.setSelected(true);
                     break;
             }
         } catch (Exception e) {
@@ -172,39 +192,48 @@ public class DialogProduct extends javax.swing.JDialog {
         btgTipo = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jpnFields = new javax.swing.JPanel();
-        cbxSecao = new javax.swing.JComboBox<>();
-        fieldCompra = new javax.swing.JFormattedTextField();
-        jLabel9 = new javax.swing.JLabel();
-        cbxCategoria = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
-        cmdCancelar = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        cmdExit = new javax.swing.JButton();
-        rbNovo = new javax.swing.JRadioButton();
-        fieldNotaFiscal = new javax.swing.JTextField();
-        fieldProdutoId = new javax.swing.JTextField();
-        rbSemi = new javax.swing.JRadioButton();
-        fieldLucro = new javax.swing.JFormattedTextField();
-        rbUsado = new javax.swing.JRadioButton();
-        jLabel6 = new javax.swing.JLabel();
-        fieldVenda = new javax.swing.JFormattedTextField();
-        jLabel8 = new javax.swing.JLabel();
-        fieldDescricao = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        cmdSalvar = new javax.swing.JButton();
-        cbxMarca = new javax.swing.JComboBox<>();
+        lblCodeBar = new javax.swing.JLabel();
+        lblProdutcId = new javax.swing.JLabel();
+        lblDescription = new javax.swing.JLabel();
+        fieldProductId = new javax.swing.JTextField();
+        fieldDescription = new javax.swing.JTextField();
         fieldCodeBar = new javax.swing.JTextField();
-        cbxUnidade = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        cmdNovo = new javax.swing.JButton();
-        ckbOrigem = new javax.swing.JCheckBox();
-        jLabel11 = new javax.swing.JLabel();
-        fieldQtd = new javax.swing.JFormattedTextField();
-        jSeparator1 = new javax.swing.JSeparator();
+        checkImported = new javax.swing.JCheckBox();
+        rbNew = new javax.swing.JRadioButton();
+        rbUsedProduct = new javax.swing.JRadioButton();
+        rbOfUsed = new javax.swing.JRadioButton();
+        lblBrand = new javax.swing.JLabel();
+        cbxBrand = new javax.swing.JComboBox<>();
+        cbxCategory = new javax.swing.JComboBox<>();
+        cbxUnit = new javax.swing.JComboBox<>();
+        lblUnit = new javax.swing.JLabel();
+        lblCategory = new javax.swing.JLabel();
+        lblSection = new javax.swing.JLabel();
+        cbxProductSection = new javax.swing.JComboBox<>();
+        cbxSupplier = new javax.swing.JComboBox<>();
+        lblSupplier = new javax.swing.JLabel();
+        cmdSupplier = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
+        fieldCompra = new javax.swing.JFormattedTextField();
+        fieldMargem = new javax.swing.JFormattedTextField();
+        jLabel9 = new javax.swing.JLabel();
+        fieldProfit = new javax.swing.JFormattedTextField();
+        fieldVenda = new javax.swing.JFormattedTextField();
+        jLabel13 = new javax.swing.JLabel();
+        lblSale = new javax.swing.JLabel();
+        lblImage = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtObservation = new javax.swing.JTextArea();
+        lblStock = new javax.swing.JLabel();
+        fieldStock = new javax.swing.JFormattedTextField();
+        cmdNew = new javax.swing.JButton();
+        cmdSave = new javax.swing.JButton();
+        cmdCancel = new javax.swing.JButton();
+        cmdExit = new javax.swing.JButton();
+        lblWarranty = new javax.swing.JLabel();
+        fieldWarranty = new javax.swing.JTextField();
+        lblCommission = new javax.swing.JLabel();
+        fieldCommission = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("CADASTRAR PRODUTO");
@@ -215,11 +244,82 @@ public class DialogProduct extends javax.swing.JDialog {
 
         jpnFields.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        cbxSecao.addKeyListener(new java.awt.event.KeyAdapter() {
+        lblCodeBar.setText("Código de barra:");
+
+        lblProdutcId.setText("Código:");
+
+        lblDescription.setText("Descrição:");
+
+        fieldProductId.setEditable(false);
+        fieldProductId.setFocusable(false);
+
+        fieldDescription.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                cbxSecaoKeyPressed(evt);
+                fieldDescriptionKeyPressed(evt);
             }
         });
+
+        fieldCodeBar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fieldCodeBarKeyPressed(evt);
+            }
+        });
+
+        checkImported.setText("Imported");
+        checkImported.setToolTipText("Imported");
+        checkImported.setPreferredSize(new java.awt.Dimension(81, 20));
+
+        btgTipo.add(rbNew);
+        rbNew.setSelected(true);
+        rbNew.setText("Novo");
+
+        btgTipo.add(rbUsedProduct);
+        rbUsedProduct.setText("Seminovo");
+
+        btgTipo.add(rbOfUsed);
+        rbOfUsed.setText("Usado");
+
+        lblBrand.setText("Marca:");
+        lblBrand.setBorder(new EmptyBorder(0,3,0,0));
+
+        cbxBrand.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbxBrandKeyPressed(evt);
+            }
+        });
+
+        cbxCategory.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbxCategoryKeyPressed(evt);
+            }
+        });
+
+        cbxUnit.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbxUnitKeyPressed(evt);
+            }
+        });
+
+        lblUnit.setText("Unidade:");
+
+        lblCategory.setText("Categoria:");
+
+        lblSection.setText("Seção:");
+
+        cbxProductSection.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbxProductSectionKeyPressed(evt);
+            }
+        });
+
+        lblSupplier.setText("Fornecedor:");
+
+        cmdSupplier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/img/query.png"))); // NOI18N
+        cmdSupplier.setMaximumSize(new java.awt.Dimension(49, 22));
+        cmdSupplier.setMinimumSize(new java.awt.Dimension(49, 22));
+        cmdSupplier.setPreferredSize(new java.awt.Dimension(49, 22));
+
+        jLabel8.setText("Compra (R$):");
 
         fieldCompra.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -230,31 +330,68 @@ public class DialogProduct extends javax.swing.JDialog {
             }
         });
 
-        jLabel9.setText("Lucro (%):");
-
-        cbxCategoria.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                cbxCategoriaKeyPressed(evt);
+        fieldMargem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                fieldMargemKeyReleased(evt);
             }
         });
 
-        jLabel4.setText("Uni.:");
+        jLabel9.setText("Margem (%):");
 
-        cmdCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/img/reflesh.png"))); // NOI18N
-        cmdCancelar.setText("Cancelar");
-        cmdCancelar.addActionListener(new java.awt.event.ActionListener() {
+        fieldProfit.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                fieldProfitKeyReleased(evt);
+            }
+        });
+
+        fieldVenda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                fieldVendaKeyReleased(evt);
+            }
+        });
+
+        jLabel13.setText("Lucro (R$):");
+
+        lblSale.setText("Venda (R$):");
+
+        lblImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/img/molde.png"))); // NOI18N
+        lblImage.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        txtObservation.setColumns(20);
+        txtObservation.setLineWrap(true);
+        txtObservation.setRows(5);
+        txtObservation.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Observação", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jScrollPane1.setViewportView(txtObservation);
+
+        lblStock.setText("Estoque:");
+
+        fieldStock.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        fieldStock.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+
+        cmdNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/img/new-pro.png"))); // NOI18N
+        cmdNew.setText("Novo");
+        cmdNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdCancelarActionPerformed(evt);
+                cmdNewActionPerformed(evt);
             }
         });
 
-        jLabel3.setText("Código de barra:");
+        cmdSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/img/save-pro.png"))); // NOI18N
+        cmdSave.setText("Salvar");
+        cmdSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdSaveActionPerformed(evt);
+            }
+        });
 
-        jLabel12.setText("NCM/ NFe:");
-
-        jLabel1.setText("Código:");
-
-        jLabel2.setText("Descrição:");
+        cmdCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/img/reflesh.png"))); // NOI18N
+        cmdCancel.setText("Cancelar");
+        cmdCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdCancelActionPerformed(evt);
+            }
+        });
 
         cmdExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/img/power.png"))); // NOI18N
         cmdExit.setText("Sair");
@@ -264,229 +401,191 @@ public class DialogProduct extends javax.swing.JDialog {
             }
         });
 
-        btgTipo.add(rbNovo);
-        rbNovo.setSelected(true);
-        rbNovo.setText("Novo");
+        lblWarranty.setText("Garantia:");
 
-        fieldProdutoId.setEditable(false);
-        fieldProdutoId.setFocusable(false);
-
-        btgTipo.add(rbSemi);
-        rbSemi.setText("Seminovo");
-
-        fieldLucro.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                fieldLucroKeyReleased(evt);
-            }
-        });
-
-        btgTipo.add(rbUsado);
-        rbUsado.setText("Usado");
-
-        jLabel6.setText("Categoria:");
-
-        fieldVenda.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                fieldVendaKeyReleased(evt);
-            }
-        });
-
-        jLabel8.setText("Compra (R$):");
-
-        fieldDescricao.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                fieldDescricaoKeyPressed(evt);
-            }
-        });
-
-        jLabel7.setText("Seção:");
-
-        cmdSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/img/save-pro.png"))); // NOI18N
-        cmdSalvar.setText("Salvar");
-        cmdSalvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdSalvarActionPerformed(evt);
-            }
-        });
-
-        cbxMarca.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                cbxMarcaKeyPressed(evt);
-            }
-        });
-
-        fieldCodeBar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                fieldCodeBarKeyPressed(evt);
-            }
-        });
-
-        cbxUnidade.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                cbxUnidadeKeyPressed(evt);
-            }
-        });
-
-        jLabel5.setText("Marca:");
-        jLabel5.setBorder(new EmptyBorder(0,3,0,0));
-
-        jLabel10.setText("Venda (R$):");
-
-        cmdNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/img/new-pro.png"))); // NOI18N
-        cmdNovo.setText("Novo");
-        cmdNovo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdNovoActionPerformed(evt);
-            }
-        });
-
-        ckbOrigem.setText("Importado");
-        ckbOrigem.setPreferredSize(new java.awt.Dimension(81, 20));
-
-        jLabel11.setText("Estoque:");
-
-        fieldQtd.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
-        fieldQtd.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        lblCommission.setText("Comissão:");
 
         javax.swing.GroupLayout jpnFieldsLayout = new javax.swing.GroupLayout(jpnFields);
         jpnFields.setLayout(jpnFieldsLayout);
         jpnFieldsLayout.setHorizontalGroup(
             jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnFieldsLayout.createSequentialGroup()
+            .addGroup(jpnFieldsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSeparator1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpnFieldsLayout.createSequentialGroup()
-                        .addComponent(cmdNovo)
+                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpnFieldsLayout.createSequentialGroup()
+                        .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(fieldDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblDescription))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmdSalvar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmdCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cmdExit))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpnFieldsLayout.createSequentialGroup()
                         .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jpnFieldsLayout.createSequentialGroup()
-                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnFieldsLayout.createSequentialGroup()
-                                        .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(cbxMarca, 0, 141, Short.MAX_VALUE)
-                                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(cbxUnidade, 0, 134, Short.MAX_VALUE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cbxCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnFieldsLayout.createSequentialGroup()
-                                        .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(fieldCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(fieldLucro, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(fieldVenda, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
-                                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel12)
-                                    .addComponent(fieldNotaFiscal)
-                                    .addComponent(cbxSecao, 0, 149, Short.MAX_VALUE)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel11)))
-                            .addComponent(jLabel1)
-                            .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpnFieldsLayout.createSequentialGroup()
-                                    .addComponent(fieldProdutoId, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(rbNovo)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(rbSemi)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(rbUsado))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpnFieldsLayout.createSequentialGroup()
-                                    .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jpnFieldsLayout.createSequentialGroup()
-                                            .addComponent(fieldDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(ckbOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(jLabel2))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel3)
-                                        .addComponent(fieldCodeBar, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(lblCodeBar)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jpnFieldsLayout.createSequentialGroup()
+                                .addComponent(fieldCodeBar)
+                                .addContainerGap())))
                     .addGroup(jpnFieldsLayout.createSequentialGroup()
-                        .addGap(422, 422, 422)
-                        .addComponent(fieldQtd)))
-                .addContainerGap())
+                        .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpnFieldsLayout.createSequentialGroup()
+                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jpnFieldsLayout.createSequentialGroup()
+                                        .addComponent(lblSection)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(cbxProductSection, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jpnFieldsLayout.createSequentialGroup()
+                                        .addComponent(cbxSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cmdSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblSupplier)))
+                            .addGroup(jpnFieldsLayout.createSequentialGroup()
+                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fieldCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fieldMargem, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fieldProfit, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fieldVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblSale, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jpnFieldsLayout.createSequentialGroup()
+                                .addComponent(cmdNew)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmdSave)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmdCancel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cmdExit))
+                            .addGroup(jpnFieldsLayout.createSequentialGroup()
+                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblProdutcId)
+                                    .addGroup(jpnFieldsLayout.createSequentialGroup()
+                                        .addComponent(fieldProductId, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(checkImported, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(rbNew)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(rbUsedProduct)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rbOfUsed))
+                            .addGroup(jpnFieldsLayout.createSequentialGroup()
+                                .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane1))
+                            .addGroup(jpnFieldsLayout.createSequentialGroup()
+                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbxBrand, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblBrand))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbxUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblUnit))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbxCategory, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(jpnFieldsLayout.createSequentialGroup()
+                                        .addComponent(lblCategory)
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnFieldsLayout.createSequentialGroup()
+                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jpnFieldsLayout.createSequentialGroup()
+                                        .addComponent(lblWarranty)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(fieldWarranty))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fieldCommission, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblCommission))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fieldStock, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblStock))))
+                        .addContainerGap())))
         );
         jpnFieldsLayout.setVerticalGroup(
             jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpnFieldsLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(lblProdutcId, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE)
+                .addGap(5, 5, 5)
+                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(rbOfUsed, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                    .addComponent(rbUsedProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(rbNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jpnFieldsLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(checkImported, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(fieldProductId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblCodeBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fieldDescription)
+                    .addComponent(fieldCodeBar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblBrand, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblUnit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxBrand, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                    .addComponent(cbxCategory)
+                    .addComponent(cbxUnit))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSection, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblSupplier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(fieldProdutoId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rbNovo)
-                    .addComponent(rbSemi)
-                    .addComponent(rbUsado))
-                .addGap(23, 23, 23)
+                    .addComponent(cbxSupplier)
+                    .addComponent(cmdSupplier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cbxProductSection, javax.swing.GroupLayout.Alignment.LEADING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblSale, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fieldDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fieldCodeBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ckbOrigem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel5))
+                    .addComponent(fieldCompra)
+                    .addComponent(fieldMargem)
+                    .addComponent(fieldProfit)
+                    .addComponent(fieldVenda))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbxUnidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxSecao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(fieldCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fieldLucro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnFieldsLayout.createSequentialGroup()
-                            .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel9)
-                                .addComponent(jLabel10)
-                                .addComponent(jLabel8))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(fieldVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jpnFieldsLayout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(fieldNotaFiscal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel11)
+                    .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fieldQtd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblStock, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                    .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblWarranty, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblCommission, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(99, 99, 99)
                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmdNovo)
-                    .addComponent(cmdSalvar)
-                    .addComponent(cmdCancelar)
-                    .addComponent(cmdExit))
-                .addContainerGap(25, Short.MAX_VALUE))
+                    .addComponent(fieldWarranty)
+                    .addComponent(fieldStock)
+                    .addComponent(fieldCommission))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmdNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmdSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmdCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmdExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -495,8 +594,8 @@ public class DialogProduct extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jpnFields, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jpnFields, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -510,7 +609,7 @@ public class DialogProduct extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -525,78 +624,78 @@ public class DialogProduct extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_cmdExitActionPerformed
 
-    private void cmdCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCancelarActionPerformed
+    private void cmdCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCancelActionPerformed
         pro = this.cancel;
         this.fields(pro);
         this.eventClick();
-    }//GEN-LAST:event_cmdCancelarActionPerformed
+    }//GEN-LAST:event_cmdCancelActionPerformed
 
-    private void cmdSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSalvarActionPerformed
+    private void cmdSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSaveActionPerformed
         try {
             save();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    }//GEN-LAST:event_cmdSalvarActionPerformed
+    }//GEN-LAST:event_cmdSaveActionPerformed
 
     private void fieldCompraKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldCompraKeyReleased
 
-        fieldLucroKeyReleased(evt);
+        fieldMargemKeyReleased(evt);
 
 
     }//GEN-LAST:event_fieldCompraKeyReleased
 
-    private void fieldLucroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldLucroKeyReleased
-        String venda = PercentValue.venda(fieldCompra.getText(), fieldLucro.getText());
+    private void fieldMargemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldMargemKeyReleased
+        String venda = PercentValue.venda(fieldCompra.getText(), fieldMargem.getText());
         fieldVenda.setText(venda);
-    }//GEN-LAST:event_fieldLucroKeyReleased
+    }//GEN-LAST:event_fieldMargemKeyReleased
 
     private void fieldVendaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldVendaKeyReleased
         String percente = PercentValue.percente(fieldCompra.getText(), fieldVenda.getText());
-        fieldLucro.setText(percente);
+        fieldMargem.setText(percente);
     }//GEN-LAST:event_fieldVendaKeyReleased
 
-    private void fieldDescricaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldDescricaoKeyPressed
+    private void fieldDescriptionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldDescriptionKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             fieldCodeBar.requestFocus();
 
         }
-    }//GEN-LAST:event_fieldDescricaoKeyPressed
+    }//GEN-LAST:event_fieldDescriptionKeyPressed
 
     private void fieldCodeBarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldCodeBarKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            cbxMarca.requestFocus();
+            cbxBrand.requestFocus();
 
         }
     }//GEN-LAST:event_fieldCodeBarKeyPressed
 
-    private void cbxMarcaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbxMarcaKeyPressed
+    private void cbxBrandKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbxBrandKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            cbxUnidade.requestFocus();
+            cbxUnit.requestFocus();
 
         }
-    }//GEN-LAST:event_cbxMarcaKeyPressed
+    }//GEN-LAST:event_cbxBrandKeyPressed
 
-    private void cbxUnidadeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbxUnidadeKeyPressed
+    private void cbxUnitKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbxUnitKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            cbxCategoria.requestFocus();
+            cbxCategory.requestFocus();
 
         }
-    }//GEN-LAST:event_cbxUnidadeKeyPressed
+    }//GEN-LAST:event_cbxUnitKeyPressed
 
-    private void cbxCategoriaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbxCategoriaKeyPressed
+    private void cbxCategoryKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbxCategoryKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            cbxSecao.requestFocus();
+            cbxProductSection.requestFocus();
 
         }
-    }//GEN-LAST:event_cbxCategoriaKeyPressed
+    }//GEN-LAST:event_cbxCategoryKeyPressed
 
-    private void cbxSecaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbxSecaoKeyPressed
+    private void cbxProductSectionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbxProductSectionKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             fieldCompra.requestFocus();
 
         }
-    }//GEN-LAST:event_cbxSecaoKeyPressed
+    }//GEN-LAST:event_cbxProductSectionKeyPressed
 
     private void fieldCompraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldCompraKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -605,9 +704,13 @@ public class DialogProduct extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_fieldCompraKeyPressed
 
-    private void cmdNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdNovoActionPerformed
+    private void cmdNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdNewActionPerformed
         this.eventClick();
-    }//GEN-LAST:event_cmdNovoActionPerformed
+    }//GEN-LAST:event_cmdNewActionPerformed
+
+    private void fieldProfitKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldProfitKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldProfitKeyReleased
 
     public static void main(String args[]) {
         try {
@@ -635,40 +738,49 @@ public class DialogProduct extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup btgTipo;
-    private javax.swing.JComboBox<entities.entity.product.Category> cbxCategoria;
-    private javax.swing.JComboBox<entities.entity.product.Brand> cbxMarca;
-    private javax.swing.JComboBox<entities.entity.product.ProductSection> cbxSecao;
-    private javax.swing.JComboBox<entities.entity.product.Measure> cbxUnidade;
-    private javax.swing.JCheckBox ckbOrigem;
-    private javax.swing.JButton cmdCancelar;
+    private javax.swing.JComboBox<entity.product.Brand> cbxBrand;
+    private javax.swing.JComboBox<entity.product.Category> cbxCategory;
+    private javax.swing.JComboBox<entity.product.ProductSection> cbxProductSection;
+    private javax.swing.JComboBox<entity.person.Cnpj> cbxSupplier;
+    private javax.swing.JComboBox<entity.product.Measure> cbxUnit;
+    private javax.swing.JCheckBox checkImported;
+    private javax.swing.JButton cmdCancel;
     private javax.swing.JButton cmdExit;
-    private javax.swing.JButton cmdNovo;
-    private javax.swing.JButton cmdSalvar;
+    private javax.swing.JButton cmdNew;
+    private javax.swing.JButton cmdSave;
+    private javax.swing.JButton cmdSupplier;
     private javax.swing.JTextField fieldCodeBar;
+    private javax.swing.JTextField fieldCommission;
     private javax.swing.JFormattedTextField fieldCompra;
-    private javax.swing.JTextField fieldDescricao;
-    private javax.swing.JFormattedTextField fieldLucro;
-    private javax.swing.JTextField fieldNotaFiscal;
-    private javax.swing.JTextField fieldProdutoId;
-    private javax.swing.JFormattedTextField fieldQtd;
+    private javax.swing.JTextField fieldDescription;
+    private javax.swing.JFormattedTextField fieldMargem;
+    private javax.swing.JTextField fieldProductId;
+    private javax.swing.JFormattedTextField fieldProfit;
+    private javax.swing.JFormattedTextField fieldStock;
     private javax.swing.JFormattedTextField fieldVenda;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JTextField fieldWarranty;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel jpnFields;
-    private javax.swing.JRadioButton rbNovo;
-    private javax.swing.JRadioButton rbSemi;
-    private javax.swing.JRadioButton rbUsado;
+    private javax.swing.JLabel lblBrand;
+    private javax.swing.JLabel lblCategory;
+    private javax.swing.JLabel lblCodeBar;
+    private javax.swing.JLabel lblCommission;
+    private javax.swing.JLabel lblDescription;
+    private javax.swing.JLabel lblImage;
+    private javax.swing.JLabel lblProdutcId;
+    private javax.swing.JLabel lblSale;
+    private javax.swing.JLabel lblSection;
+    private javax.swing.JLabel lblStock;
+    private javax.swing.JLabel lblSupplier;
+    private javax.swing.JLabel lblUnit;
+    private javax.swing.JLabel lblWarranty;
+    private javax.swing.JRadioButton rbNew;
+    private javax.swing.JRadioButton rbOfUsed;
+    private javax.swing.JRadioButton rbUsedProduct;
+    private javax.swing.JTextArea txtObservation;
     // End of variables declaration//GEN-END:variables
 }

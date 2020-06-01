@@ -1,20 +1,20 @@
 package impl;
 
-import entities.entity.uf.States;
+import entity.uf.State;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-public class ImplState extends factory.Generic<States> {
+public class ImplState extends factory.Generic<State> {
 
-    private static States uf;
+    private static State uf;
 
-    public List<States> findAll() {
+    public List<State> findAll() {
         EntityManager em = factory.Generic.Factory();
-        List<States> estado;
+        List<State> estado;
         try {
-            Query query = em.createNamedQuery("States.findAll");
+            Query query = em.createNamedQuery("State.findAll");
             estado = query.getResultList();
         } catch (Exception e) {
             estado = new ArrayList();
@@ -25,7 +25,7 @@ public class ImplState extends factory.Generic<States> {
 
     public static void updateState() {
         ImplState imp = new ImplState();
-        uf = new States();
+        uf = new State();
         String value
                 = "12, 'Acre', 'AC', 1 \n"
                 + "27, 'Alagoas', 'AL', 2 \n"
@@ -59,16 +59,17 @@ public class ImplState extends factory.Generic<States> {
 
         for (String v : split) {
             String[] set = v.split(",");
-            uf.setCodigouf(null);
+//            uf.setCodigouf(null);
             uf.setNome(set[1].trim().replace("'", ""));
             uf.setUf(set[2].trim().replace("'", ""));
             uf.setRegiao(Integer.parseInt(set[3].trim()));
-
-            if (imp.findAll().size() != 27) {
-                imp.save(uf);
-            }
-
+            imp.save(uf);
         }
+        
+        if (imp.findAll().size() <= 27) {
+            updateState(); // 
+        }
+
     }
 
 }

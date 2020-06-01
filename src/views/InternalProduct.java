@@ -1,7 +1,7 @@
 package views;
 
-import entities.entity.product.Stock;
-import entities.entity.product.Product;
+import entity.product.Stock;
+import entity.product.Product;
 import impl.ImplProduct;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
@@ -38,7 +38,7 @@ public class InternalProduct extends javax.swing.JInternalFrame {
                 c.getEstoqueQtd(),
                 c.getCondicao(),
                 c.getIdMarca(),
-                c.getIdCategoria()
+                c.getPerson()
 
             });
 
@@ -64,6 +64,7 @@ public class InternalProduct extends javax.swing.JInternalFrame {
         cmdDelete = new javax.swing.JButton();
         cmdSair = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        lblTeste = new javax.swing.JLabel();
 
         itemEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/img/client_edit.png"))); // NOI18N
         itemEditar.setText("Editar linha");
@@ -175,6 +176,8 @@ public class InternalProduct extends javax.swing.JInternalFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/img/lupa.png"))); // NOI18N
 
+        lblTeste.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
         javax.swing.GroupLayout jpnFieldsLayout = new javax.swing.GroupLayout(jpnFields);
         jpnFields.setLayout(jpnFieldsLayout);
         jpnFieldsLayout.setHorizontalGroup(
@@ -198,7 +201,8 @@ public class InternalProduct extends javax.swing.JInternalFrame {
                                 .addComponent(query, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblTeste, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jpnFieldsLayout.setVerticalGroup(
@@ -208,8 +212,10 @@ public class InternalProduct extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(query, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblTeste, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(query)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -370,6 +376,7 @@ public class InternalProduct extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel jpnFields;
+    private javax.swing.JLabel lblTeste;
     private javax.swing.JTable masterTable;
     private javax.swing.JPopupMenu menuEditDelete;
     private javax.swing.JTextField query;

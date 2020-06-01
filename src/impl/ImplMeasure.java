@@ -5,7 +5,7 @@
  */
 package impl;
 
-import entities.entity.product.Measure;
+import entity.product.Measure;
 import factory.Generic;
 import java.util.ArrayList;
 import java.util.List;

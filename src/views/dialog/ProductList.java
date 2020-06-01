@@ -1,6 +1,6 @@
 package views.dialog;
 
-import entities.entity.product.Stock;
+import entity.product.Stock;
 import impl.ImplProduct;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;

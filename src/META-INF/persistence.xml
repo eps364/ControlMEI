@@ -2,19 +2,19 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="controlup" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>entities.entity.person.Cpf</class>
-    <class>entities.entity.person.Cnpj</class>
-    <class>entities.entity.product.Category</class>
-    <class>entities.entity.product.Stock</class>
-    <class>entities.entity.product.Brand</class>
-    <class>entities.entity.product.Measure</class>
-    <class>entities.entity.product.Product</class>
-    <class>entities.entity.product.ProductSection</class>
-    <class>entities.entity.Paygamment</class>
-    <class>entities.entity.Sale</class>
-    <class>entities.entity.Person</class>
-    <class>entities.entity.uf.States</class>
-    <class>entities.entity.SaleItem</class>
+    <class>entity.person.Cnpj</class>
+    <class>entity.person.Cpf</class>
+    <class>entity.Person</class>
+    <class>entity.SaleItem</class>
+    <class>entity.product.ProductSection</class>
+    <class>entity.product.Brand</class>
+    <class>entity.product.Measure</class>
+    <class>entity.product.Product</class>
+    <class>entity.product.Stock</class>
+    <class>entity.product.Category</class>
+    <class>entity.Sale</class>
+    <class>entity.Paygamment</class>
+    <class>entity.uf.State</class>
     <properties>
       <!--<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/controle?useTimezone=true&amp;serverTimezone=UTC"/>-->
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/dev-db"/>
@@ -24,6 +24,7 @@
       <!--<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>-->
       <property name="javax.persistence.jdbc.password" value="app"/>
       <!--<property name="javax.persistence.jdbc.password" value="admin-dba"/>-->
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>
   </persistence-unit>
 </persistence>

@@ -1,7 +1,7 @@
 package views.dialog;
 
-import entities.entity.person.Cnpj;
-import entities.entity.uf.States;
+import entity.person.Cnpj;
+import entity.uf.State;
 import enu.FieldChar;
 import impl.ImplState;
 import impl.ImplCNPJ;
@@ -774,7 +774,7 @@ public class DialogCNPJ extends javax.swing.JDialog {
         cnpj.setBairro(fieldBairro.getText().toUpperCase().trim());
         cnpj.setCidade(fieldCidade.getText().toUpperCase().trim());
 
-        cnpj.setEstado((States) cbxUf.getSelectedItem());
+        cnpj.setEstado((State) cbxUf.getSelectedItem());
         crudPessoa = new ImplCNPJ();
         crudPessoa.save(cnpj);
         JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!");
@@ -832,7 +832,7 @@ public class DialogCNPJ extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<entities.entity.uf.States> cbxUf;
+    private javax.swing.JComboBox<entity.uf.State> cbxUf;
     private com.toedter.calendar.JDateChooser chooserNasc;
     private javax.swing.JCheckBox ckbSituacao;
     private javax.swing.JButton cmdCancelar;

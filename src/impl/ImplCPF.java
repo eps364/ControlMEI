@@ -5,7 +5,7 @@
  */
 package impl;
 
-import entities.entity.person.Cpf;
+import entity.person.Cpf;
 import factory.Generic;
 import java.util.ArrayList;
 import java.util.List;

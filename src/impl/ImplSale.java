@@ -1,6 +1,6 @@
 package impl;
 
-import entities.entity.Sale;
+import entity.Sale;
 import factory.Generic;
 import java.util.ArrayList;
 import java.util.List;

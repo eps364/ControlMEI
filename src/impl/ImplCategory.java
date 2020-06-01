@@ -5,7 +5,7 @@
  */
 package impl;
 
-import entities.entity.product.Category;
+import entity.product.Category;
 import factory.Generic;
 import java.util.ArrayList;
 import java.util.List;
