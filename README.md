@@ -7,11 +7,6 @@ This software was will development Java SE and implements is the sections down:
 
 
 ## Windows of software ControlMEI
-[![categories screen](https://imgur.com/FoErBc2 "categories screen")](https://imgur.com/FoErBc2 "categories screen")
-
-[![product screen](https://drive.google.com/file/d/16GB81b2Z1t_mBVIb9quBIAuxLbQikJ80/view?usp=sharing "product screen")](https://drive.google.com/file/d/16GB81b2Z1t_mBVIb9quBIAuxLbQikJ80/view?usp=sharing "product screen")
-
-[![Person screen](https://drive.google.com/file/d/1ffcUYib1HLXo2JpvABYgwZuAnMv1vLGg/view?usp=sharing "Person screen")](https://drive.google.com/file/d/1ffcUYib1HLXo2JpvABYgwZuAnMv1vLGg/view?usp=sharing "Person screen")
 
 Framework, library and CASE:
 - Java SE
@@ -21,7 +16,7 @@ Framework, library and CASE:
 - Database MySQL And Apache Derby for embedded
 
 ### Information
-The objects for insert will a send application it for generic class the database.
+The objects will send the data for generic class the database.
 
 `````java
 public abstract class Generic<T extends InterValueId> {
@@ -98,3 +93,11 @@ public abstract class Generic<T extends InterValueId> {
 
 }
 `````
+
+<a href="https://imgur.com/F1zueFb"><img src="https://i.imgur.com/F1zueFbh.png" title="source: imgur.com" /></a>
+
+<a href="https://imgur.com/NzfobE7"><img src="https://i.imgur.com/NzfobE7h.png" title="source: imgur.com" /></a>
+
+<a href="https://imgur.com/y4taqVV"><img src="https://i.imgur.com/y4taqVVh.png" title="source: imgur.com" /></a>
+
+<a href="https://imgur.com/FoErBc2"><img src="https://i.imgur.com/FoErBc2h.png" title="source: imgur.com" /></a>
