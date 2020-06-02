@@ -94,7 +94,7 @@ public abstract class Generic<T extends InterValueId> {
 }
 `````
 
-<a href="https://imgur.com/F1zueFb"><img src="https://i.imgur.com/F1zueFbh.png" title="source: imgur.com" /></a>
+<a href="https://imgur.com/SGdmwvE"><img src="https://i.imgur.com/SGdmwvE.png" title="source: imgur.com" /></a>
 
 <a href="https://imgur.com/NzfobE7"><img src="https://i.imgur.com/NzfobE7h.png" title="source: imgur.com" /></a>
 
