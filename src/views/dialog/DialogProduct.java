@@ -13,35 +13,37 @@ import impl.ImplCNPJ;
 import impl.ImplMeasure;
 import impl.ImplProduct;
 import impl.ImplSection;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.border.EmptyBorder;
 import util.ControlPanel;
+import util.FilterImage;
 import util.FormatNumber;
 import util.PercentValue;
 
 public class DialogProduct extends javax.swing.JDialog {
 
-    private Stock pro, cancel;
+    private Stock stock, rollback;
     private ImplProduct crud;
+    private static String imagePath;
 
     public DialogProduct(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        pro = new Stock();
         this.updateComboBox();
         this.eventClick();
     }
 
-    public DialogProduct(java.awt.Frame parent, boolean modal, Stock produto) {
+    public DialogProduct(java.awt.Frame parent, boolean modal, Stock stock) {
         super(parent, modal);
         initComponents();
         this.updateComboBox();
-        this.cancel = produto;
-        this.fields(produto);
-
+        this.rollback = stock;
+        this.fields(stock);
     }
 
     private void eventClick() {
@@ -49,10 +51,14 @@ public class DialogProduct extends javax.swing.JDialog {
         if (isClick) {
             cmdNew.setEnabled(false);
             cmdCancel.setEnabled(true);
+            imagePath = "";
+            stock = new Stock();
+            this.fields(stock);
         } else {
             cmdCancel.setEnabled(false);
             cmdNew.setEnabled(true);
         }
+
     }
 
     private void updateComboBox() {
@@ -88,71 +94,73 @@ public class DialogProduct extends javax.swing.JDialog {
 
     }
 
-    private void fields(Stock produto) {
+    private void fields(Stock stock) {
         try {
-            this.pro = produto;
-            fieldProductId.setText(0 + String.valueOf(pro.getId()));
-            fieldDescription.setText(pro.getProdutoDescricao());
-            fieldCodeBar.setText(pro.getCodeBar());
-            txtObservation.setText(pro.getObservation());
+            this.stock = stock;
+            fieldProductId.setText(String.valueOf(this.stock.getId()));
+            fieldDescription.setText(this.stock.getProdutoDescricao());
+            fieldCodeBar.setText(this.stock.getCodeBar());
+            txtObservation.setText(this.stock.getObservation());
 
-            fieldCompra.setText(String.valueOf(pro.getPrecoCompra()).replace(".", ","));
-            fieldVenda.setText(String.valueOf(pro.getPrecoVenda()).replace(".", ","));
-            fieldMargem.setText(String.valueOf((pro.getPercente().doubleValue() * 100)).replace(".", ","));
+            fieldCompra.setText(String.valueOf(this.stock.getPrecoCompra()).replace(".", ","));
+            fieldVenda.setText(String.valueOf(this.stock.getPrecoVenda()).replace(".", ","));
+            fieldMargem.setText(String.valueOf((this.stock.getPercente().doubleValue() * 100)).replace(".", ","));
 
-            cbxCategory.getModel().setSelectedItem(pro.getIdCategoria());
-            cbxBrand.getModel().setSelectedItem(pro.getIdMarca());
-            cbxUnit.getModel().setSelectedItem(pro.getIdMedida());
-            cbxProductSection.getModel().setSelectedItem(pro.getIdSecao());
-            cbxSupplier.getModel().setSelectedItem(pro.getPerson());
+            cbxCategory.getModel().setSelectedItem(this.stock.getIdCategoria());
+            cbxBrand.getModel().setSelectedItem(this.stock.getIdMarca());
+            cbxUnit.getModel().setSelectedItem(this.stock.getIdMedida());
+            cbxProductSection.getModel().setSelectedItem(this.stock.getIdSecao());
+            cbxSupplier.getModel().setSelectedItem(this.stock.getPerson());
 
-            checkImported.setSelected(Boolean.valueOf(pro.getNacional()));
+            checkImported.setSelected(Boolean.valueOf(this.stock.getNacional()));
 
-            
-            fieldWarranty.setText(String.valueOf(pro.getWarranty()).replace(".", ","));
-            fieldProfit.setText(String.valueOf(pro.getProfit()).replace(".", ","));
-            fieldCommission.setText(String.valueOf(pro.getCommission()).replace(".", ","));
-            
-            fieldStock.setText(String.valueOf(pro.getEstoqueQtd()));
-            checkProduto(pro.getCondicao());
+            fieldWarranty.setText(String.valueOf(this.stock.getWarranty()).replace(".", ","));
+            fieldProfit.setText(String.valueOf(this.stock.getProfit()).replace(".", ","));
+            fieldCommission.setText(String.valueOf(this.stock.getCommission()).replace(".", ","));
+
+            imagePath = this.stock.getProductImage();
+
+            fieldStock.setText(String.valueOf(this.stock.getEstoqueQtd()));
+            checkProduto(this.stock.getCondicao());
         } catch (Exception e) {
             System.out.println("Error 001-f: " + e.getMessage());
+        } finally {
+            lblImage.setIcon(this.getImage(imagePath));
         }
 
     }
 
     private void save() throws Exception {
-        pro.setProdutoDescricao(fieldDescription.getText().toUpperCase().trim());
-        pro.setCodeBar(fieldCodeBar.getText());
-        pro.setObservation(txtObservation.getText());
-        pro.setPrecoCompra(BigDecimal.valueOf(Double.parseDouble(fieldCompra.getText().replace(",", "."))));
+        stock.setProdutoDescricao(fieldDescription.getText().toUpperCase().trim());
+        stock.setCodeBar(fieldCodeBar.getText());
+        stock.setObservation(txtObservation.getText());
+        stock.setPrecoCompra(BigDecimal.valueOf(Double.parseDouble(fieldCompra.getText().replace(",", "."))));
         Person person = (Person) cbxSupplier.getSelectedItem();
-        pro.setPerson(person);
-        
-        pro.setWarranty(Integer.parseInt(fieldWarranty.getText()));
-        pro.setComission(BigDecimal.valueOf(Double.parseDouble(0+fieldCommission.getText().replace(",", "."))));
-        pro.setProfit(BigDecimal.valueOf(Double.parseDouble(0+fieldProfit.getText().replace(",", "."))));
-        
-        
+        stock.setPerson(person);
 
-        pro.setPrecoVenda((BigDecimal.valueOf(Double.parseDouble(fieldVenda.getText().replace(",", ".")))));
-        BigDecimal b = BigDecimal.valueOf(Double.parseDouble(fieldMargem.getText().replace(",", ".")) / 100);
-        pro.setPercente(b);
+        stock.setWarranty(Integer.parseInt("0".concat(fieldWarranty.getText())));
+        stock.setComission(BigDecimal.valueOf(Double.parseDouble("0".concat(fieldCommission.getText().replace(",", ".")))));
+        stock.setProfit(BigDecimal.valueOf(Double.parseDouble("0".concat(fieldProfit.getText().replace(",", ".")))));
+        stock.setProductImage(imagePath);
+
+        stock.setPrecoVenda((BigDecimal.valueOf(Double.parseDouble("0".concat(fieldVenda.getText().replace(",", "."))))));
+        BigDecimal b = BigDecimal.valueOf(Double.parseDouble("0".concat(fieldMargem.getText().replace(",", "."))) / 100);
+        stock.setPercente(b);
 
         if (fieldDescription.getText().isEmpty()) {
-            throw new Exception("O campo descrição não pode ser vazio.\nVerifique e tente novamente");
+            throw new IllegalArgumentException("O campo descrição não pode ser vazio.\nVerifique e tente novamente");
         }
-        pro.setEstoqueQtd(Integer.parseInt(0 + fieldStock.getText()));
+        stock.setEstoqueQtd(Integer.parseInt("0".concat(fieldStock.getText())));
 
-        pro.setCategoria((Category) cbxCategory.getSelectedItem());
+        stock.setCategoria((Category) cbxCategory.getSelectedItem());
 
-        pro.setIdMarca((Brand) cbxBrand.getModel().getSelectedItem());
+        stock.setIdMarca((Brand) cbxBrand.getModel().getSelectedItem());
 
-        pro.setIdMedida((Measure) cbxUnit.getModel().getSelectedItem());
+        stock.setIdMedida((Measure) cbxUnit.getModel().getSelectedItem());
 
-        pro.setIdSecao((ProductSection) cbxProductSection.getModel().getSelectedItem());
+        stock.setIdSecao((ProductSection) cbxProductSection.getModel().getSelectedItem());
 
-        pro.setNacional(String.valueOf(checkImported.isSelected()));
+        stock.setNacional(String.valueOf(checkImported.isSelected()));
         String condicao = "Novo";
         if (rbUsedProduct.isSelected()) {
             condicao = "Seminovo";
@@ -161,8 +169,8 @@ public class DialogProduct extends javax.swing.JDialog {
             condicao = "Usado";
         }
 
-        pro.setCondicao(condicao.toUpperCase());
-        crud.save(pro);
+        stock.setCondicao(condicao.toUpperCase());
+        crud.save(stock);
         JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!");
     }
 
@@ -190,6 +198,12 @@ public class DialogProduct extends javax.swing.JDialog {
     private void initComponents() {
 
         btgTipo = new javax.swing.ButtonGroup();
+        popUpImagem = new javax.swing.JPopupMenu();
+        jmnItemAdd = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jmnItemClear = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
+        jmnWebcam = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jpnFields = new javax.swing.JPanel();
         lblCodeBar = new javax.swing.JLabel();
@@ -231,9 +245,35 @@ public class DialogProduct extends javax.swing.JDialog {
         cmdCancel = new javax.swing.JButton();
         cmdExit = new javax.swing.JButton();
         lblWarranty = new javax.swing.JLabel();
-        fieldWarranty = new javax.swing.JTextField();
         lblCommission = new javax.swing.JLabel();
-        fieldCommission = new javax.swing.JTextField();
+        fieldCommission = new javax.swing.JFormattedTextField();
+        fieldWarranty = new javax.swing.JFormattedTextField();
+
+        jmnItemAdd.setText("Add Image");
+        jmnItemAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnItemAddActionPerformed(evt);
+            }
+        });
+        popUpImagem.add(jmnItemAdd);
+        popUpImagem.add(jSeparator1);
+
+        jmnItemClear.setText("Clear Image");
+        jmnItemClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnItemClearActionPerformed(evt);
+            }
+        });
+        popUpImagem.add(jmnItemClear);
+        popUpImagem.add(jSeparator2);
+
+        jmnWebcam.setText("WebCam");
+        jmnWebcam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmnWebcamActionPerformed(evt);
+            }
+        });
+        popUpImagem.add(jmnWebcam);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("CADASTRAR PRODUTO");
@@ -356,7 +396,17 @@ public class DialogProduct extends javax.swing.JDialog {
 
         lblImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/img/molde.png"))); // NOI18N
+        lblImage.setToolTipText("Image Select");
         lblImage.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        lblImage.setComponentPopupMenu(popUpImagem);
+        lblImage.setMaximumSize(new java.awt.Dimension(184, 200));
+        lblImage.setMinimumSize(new java.awt.Dimension(184, 200));
+        lblImage.setPreferredSize(new java.awt.Dimension(184, 200));
+        lblImage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblImageMouseClicked(evt);
+            }
+        });
 
         txtObservation.setColumns(20);
         txtObservation.setLineWrap(true);
@@ -434,27 +484,11 @@ public class DialogProduct extends javax.swing.JDialog {
                                     .addComponent(cbxProductSection, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblSupplier)
                                     .addGroup(jpnFieldsLayout.createSequentialGroup()
-                                        .addComponent(cbxSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cbxSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cmdSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(lblSupplier)))
-                            .addGroup(jpnFieldsLayout.createSequentialGroup()
-                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fieldCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fieldMargem, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fieldProfit, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fieldVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblSale, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(cmdSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jpnFieldsLayout.createSequentialGroup()
                                 .addComponent(cmdNew)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -464,22 +498,15 @@ public class DialogProduct extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(cmdExit))
                             .addGroup(jpnFieldsLayout.createSequentialGroup()
-                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblProdutcId)
-                                    .addGroup(jpnFieldsLayout.createSequentialGroup()
-                                        .addComponent(fieldProductId, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(checkImported, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(fieldProductId, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(checkImported, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(rbNew)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(rbUsedProduct)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(rbOfUsed))
-                            .addGroup(jpnFieldsLayout.createSequentialGroup()
-                                .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1))
                             .addGroup(jpnFieldsLayout.createSequentialGroup()
                                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cbxBrand, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -501,31 +528,57 @@ public class DialogProduct extends javax.swing.JDialog {
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addComponent(fieldWarranty))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fieldCommission, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblCommission))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jpnFieldsLayout.createSequentialGroup()
+                                        .addComponent(lblCommission)
+                                        .addGap(159, 159, 159))
+                                    .addGroup(jpnFieldsLayout.createSequentialGroup()
+                                        .addComponent(fieldCommission, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(fieldStock, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblStock))))
-                        .addContainerGap())))
+                                    .addComponent(lblStock)))
+                            .addGroup(jpnFieldsLayout.createSequentialGroup()
+                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fieldCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fieldMargem, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fieldProfit, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fieldVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblSale, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(jpnFieldsLayout.createSequentialGroup()
+                        .addComponent(lblProdutcId)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jpnFieldsLayout.createSequentialGroup()
+                        .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1))))
         );
         jpnFieldsLayout.setVerticalGroup(
             jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpnFieldsLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblProdutcId, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE)
-                .addGap(5, 5, 5)
+                .addGap(19, 19, 19)
+                .addComponent(lblProdutcId, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(rbOfUsed, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-                    .addComponent(rbUsedProduct, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(rbNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(rbOfUsed, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rbUsedProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rbNew, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jpnFieldsLayout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(checkImported, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(checkImported, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
                             .addComponent(fieldProductId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(7, 7, 7)
                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(lblCodeBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -549,7 +602,7 @@ public class DialogProduct extends javax.swing.JDialog {
                     .addComponent(lblSupplier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(cbxSupplier)
+                    .addComponent(cbxSupplier, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
                     .addComponent(cmdSupplier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cbxProductSection, javax.swing.GroupLayout.Alignment.LEADING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -566,26 +619,25 @@ public class DialogProduct extends javax.swing.JDialog {
                     .addComponent(fieldVenda))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblStock, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
-                    .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblWarranty, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblCommission, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1)
+                    .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fieldWarranty)
+                    .addComponent(lblStock, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                    .addComponent(lblCommission, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblWarranty))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fieldStock)
-                    .addComponent(fieldCommission))
+                    .addComponent(fieldCommission, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldWarranty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cmdSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cmdCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cmdExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGap(12, 12, 12))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -625,8 +677,8 @@ public class DialogProduct extends javax.swing.JDialog {
     }//GEN-LAST:event_cmdExitActionPerformed
 
     private void cmdCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCancelActionPerformed
-        pro = this.cancel;
-        this.fields(pro);
+        stock = this.rollback;
+        this.fields(stock);
         this.eventClick();
     }//GEN-LAST:event_cmdCancelActionPerformed
 
@@ -634,7 +686,7 @@ public class DialogProduct extends javax.swing.JDialog {
         try {
             save();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error save: ".concat(e.getMessage()));
         }
     }//GEN-LAST:event_cmdSaveActionPerformed
 
@@ -712,6 +764,49 @@ public class DialogProduct extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_fieldProfitKeyReleased
 
+    private void lblImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImageMouseClicked
+        if (evt.getClickCount() == 2) {
+            jmnItemAddActionPerformed(null);
+        }
+
+    }//GEN-LAST:event_lblImageMouseClicked
+
+    private void jmnItemAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnItemAddActionPerformed
+        try {
+            this.openFileImage();
+        } catch (Exception e) {
+            System.out.println("Null value");
+        }
+    }//GEN-LAST:event_jmnItemAddActionPerformed
+
+    private void jmnItemClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnItemClearActionPerformed
+        imagePath = "";
+        lblImage.setIcon(getImage(imagePath));
+    }//GEN-LAST:event_jmnItemClearActionPerformed
+
+    private void jmnWebcamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnWebcamActionPerformed
+       JOptionPane.showMessageDialog(rootPane, "No implement");
+    }//GEN-LAST:event_jmnWebcamActionPerformed
+
+    //
+    private void openFileImage() throws Exception {
+
+        JFileChooser chooser = new JFileChooser();
+        chooser.setFileFilter(FilterImage.getFilter());
+        chooser.showOpenDialog(this);
+        imagePath = chooser.getSelectedFile().getAbsolutePath();
+        lblImage.setIcon(this.getImage(imagePath));
+
+    }
+
+    private ImageIcon getImage(String path) {
+        ImageIcon icon = new ImageIcon(getClass().getResource("/views/img/molde.png"));
+        if (!path.equals("")) {
+            icon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(path));
+        }
+        return icon;
+    }
+
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -750,7 +845,7 @@ public class DialogProduct extends javax.swing.JDialog {
     private javax.swing.JButton cmdSave;
     private javax.swing.JButton cmdSupplier;
     private javax.swing.JTextField fieldCodeBar;
-    private javax.swing.JTextField fieldCommission;
+    private javax.swing.JFormattedTextField fieldCommission;
     private javax.swing.JFormattedTextField fieldCompra;
     private javax.swing.JTextField fieldDescription;
     private javax.swing.JFormattedTextField fieldMargem;
@@ -758,12 +853,17 @@ public class DialogProduct extends javax.swing.JDialog {
     private javax.swing.JFormattedTextField fieldProfit;
     private javax.swing.JFormattedTextField fieldStock;
     private javax.swing.JFormattedTextField fieldVenda;
-    private javax.swing.JTextField fieldWarranty;
+    private javax.swing.JFormattedTextField fieldWarranty;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JMenuItem jmnItemAdd;
+    private javax.swing.JMenuItem jmnItemClear;
+    private javax.swing.JMenuItem jmnWebcam;
     private javax.swing.JPanel jpnFields;
     private javax.swing.JLabel lblBrand;
     private javax.swing.JLabel lblCategory;
@@ -778,6 +878,7 @@ public class DialogProduct extends javax.swing.JDialog {
     private javax.swing.JLabel lblSupplier;
     private javax.swing.JLabel lblUnit;
     private javax.swing.JLabel lblWarranty;
+    private javax.swing.JPopupMenu popUpImagem;
     private javax.swing.JRadioButton rbNew;
     private javax.swing.JRadioButton rbOfUsed;
     private javax.swing.JRadioButton rbUsedProduct;

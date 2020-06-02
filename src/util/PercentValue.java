@@ -14,9 +14,9 @@ public class PercentValue {
      * @return - return string value
      */
     public static String percente(String purchase, String sale) {
-        if (Double.parseDouble(0 + purchase.replace(",", ".")) > 0) {
-            double c = Double.parseDouble(0 + purchase.replace(",", "."));
-            PercentValue.venda = Double.parseDouble(0 + sale.replace(",", "."));
+        if (Double.parseDouble("0".concat(purchase.replace(",", "."))) > 0) {
+            double c = Double.parseDouble("0".concat(purchase.replace(",", ".")));
+            PercentValue.venda = Double.parseDouble("0".concat(sale.replace(",", ".")));
 
             double value = (PercentValue.venda - c) / c;
             return String.valueOf(new DecimalFormat("0.0#").format(0 + value * 100));
@@ -31,8 +31,8 @@ public class PercentValue {
      * @return - return string value
      */
     public static String venda(String purchase, String percente) {
-        PercentValue.lucro = Double.parseDouble(0 + percente.replace(",", ".")) / 100;
-        PercentValue.compra = Double.parseDouble(0 + purchase.replace(",", "."));
+        PercentValue.lucro = Double.parseDouble("0".concat(percente.replace(",", "."))) / 100;
+        PercentValue.compra = Double.parseDouble("0".concat(purchase.replace(",", ".")));
 
         PercentValue.compra += PercentValue.compra * PercentValue.lucro;
         return String.valueOf(new DecimalFormat("0.0#").format(PercentValue.compra));

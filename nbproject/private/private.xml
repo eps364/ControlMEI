@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="4">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="6">
         <file>
             <url>src/views/dialog/ListCliente.java</url>
             <bookmark id="3">
@@ -11,15 +11,26 @@
         </file>
         <file>
             <url>src/views/dialog/DialogProduct.java</url>
+            <bookmark id="6">
+                <name/>
+                <line>43</line>
+                <key/>
+            </bookmark>
+            <bookmark id="5">
+                <name/>
+                <line>120</line>
+                <key/>
+            </bookmark>
             <bookmark id="4">
                 <name/>
-                <line>578</line>
+                <line>672</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/colpv/Documents/Projects/ControlMEI/src/exec/Program.java</file>
             <file>file:/C:/Users/colpv/Documents/Projects/ControlMEI/src/views/dialog/DialogProduct.java</file>
         </group>
     </open-files>

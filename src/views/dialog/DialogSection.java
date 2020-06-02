@@ -2,6 +2,7 @@ package views.dialog;
 
 import entity.product.ProductSection;
 import impl.ImplSection;
+import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -47,10 +48,10 @@ public class DialogSection extends javax.swing.JDialog {
 
             secao.setSecao(fieldCategoria.getText().toUpperCase());
             if (fieldCategoria.getText().equals("")) {
-                throw new Exception("categoria inválida.\nVerifique e tente novamente");
+                throw new IllegalArgumentException("categoria inválida.\nVerifique e tente novamente");
             }
             crud.save(secao);
-            JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!");
+
             updateTable();
             int size = crud.findAll().size();
             if (size > old) {
@@ -61,7 +62,8 @@ public class DialogSection extends javax.swing.JDialog {
                 this.modifRowTable(row);
                 this.fields();
             }
-        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!");
+        } catch (HeadlessException | IllegalArgumentException e) {
 
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }

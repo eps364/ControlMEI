@@ -908,12 +908,12 @@ public class DialogCPF extends javax.swing.JDialog {
 
         cpf.setRazaoSocial(fieldRazaoSocial.getText().toUpperCase().trim());
         if (cpf.getRazaoSocial().equals("")) {
-            throw new Exception("O campo razão social não pode ser vazio.\nVerifique e tente novamente");
+            throw new IllegalArgumentException("O campo razão social não pode ser vazio.\nVerifique e tente novamente");
         }
         cpf.setNomeFantasia(fieldNomeApelido.getText().toUpperCase());
         cpf.setNascimento(chooserNasc.getDate());
         if (cpf.getNascimento() == null) {
-            throw new Exception("O campo Nascimento não pode ser vazio.\nVerifique e tente novamente");
+            throw new IllegalArgumentException("O campo Nascimento não pode ser vazio.\nVerifique e tente novamente");
         }
 
         cpf.setCredito(Double.parseDouble(0 + fieldCredito.getText().replace(",", ".")));
@@ -922,7 +922,6 @@ public class DialogCPF extends javax.swing.JDialog {
 
         cpf.setCpfNumber(fieldCPF.getText());
 
-//        cpf.setInscEstadual(fieldInscEstadual.getText());
         cpf.setRg(fieldRg.getText());
 
         cpf.setFone(fieldFone.getText());
@@ -944,10 +943,6 @@ public class DialogCPF extends javax.swing.JDialog {
         cpf.setCidade(fieldCidade.getText().toUpperCase().trim());
 
         cpf.setEstado((State) cbxUf.getSelectedItem());
-//        Estado s = new Estado();
-//        s.setNome(e);
-//        System.out.println(s.getId());
-
         cpf.setProfissao(fieldProfissao.getText().toUpperCase().trim());
         cpf.setLocalTrabalho(fieldLocalTrabalho.getText().toUpperCase().trim());
         cpf.setSalario(Double.parseDouble(0 + fieldSalario.getText().replace(",", ".")));

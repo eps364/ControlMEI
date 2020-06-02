@@ -1,8 +1,8 @@
 package views.dialog;
 
-
 import entity.product.Brand;
 import impl.ImplBrand;
+import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -10,7 +10,6 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import util.ControlPanel;
-
 
 public class DialogBrand extends javax.swing.JDialog {
 
@@ -25,7 +24,7 @@ public class DialogBrand extends javax.swing.JDialog {
         initComponents();
         model = (DefaultTableModel) masterTable.getModel();
         updateTable();
-         ControlPanel.borderLabel(jpnFields);
+        ControlPanel.borderLabel(jpnFields);
     }
 
     private void updateTable() {
@@ -49,10 +48,10 @@ public class DialogBrand extends javax.swing.JDialog {
 
             marca.setMarca(fieldCategoria.getText().toUpperCase());
             if (fieldCategoria.getText().equals("")) {
-                throw new Exception("categoria inválida.\nVerifique e tente novamente");
+                throw new IllegalArgumentException("categoria inválida.\nVerifique e tente novamente");
             }
             crud.save(marca);
-            JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!");
+
             updateTable();
             int size = crud.findAll().size();
             if (size > old) {
@@ -63,7 +62,8 @@ public class DialogBrand extends javax.swing.JDialog {
                 this.modifRowTable(row);
                 this.fields();
             }
-        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!");
+        } catch (HeadlessException | IllegalArgumentException e) {
 
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }

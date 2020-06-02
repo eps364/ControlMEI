@@ -2,6 +2,7 @@ package views.dialog;
 
 import entity.product.Category;
 import impl.ImplCategory;
+import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -41,16 +42,16 @@ public class DialogCategory extends javax.swing.JDialog {
     }
 
     private void save() {
- try {
+        try {
             int row = masterTable.getSelectedRow();
             int old = crud.findAll().size();
 
             categoria.setCategoria(fieldCategoria.getText().toUpperCase());
             if (fieldCategoria.getText().equals("")) {
-                throw new Exception("categoria inválida.\nVerifique e tente novamente");
+                throw new IllegalArgumentException("categoria inválida.\nVerifique e tente novamente");
             }
             crud.save(categoria);
-            JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!");
+
             updateTable();
             int size = crud.findAll().size();
             if (size > old) {
@@ -61,7 +62,8 @@ public class DialogCategory extends javax.swing.JDialog {
                 this.modifRowTable(row);
                 this.fields();
             }
-        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!");
+        } catch (HeadlessException | IllegalArgumentException e) {
 
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }

@@ -751,12 +751,12 @@ public class DialogCNPJ extends javax.swing.JDialog {
 
         cnpj.setRazaoSocial(fieldNome.getText().toUpperCase().trim());
         if (cnpj.getRazaoSocial().equals("")) {
-            throw new Exception("O campo razão social não pode ser vazio.\nVerifique e tente novamente");
+            throw new IllegalArgumentException("O campo razão social não pode ser vazio.\nVerifique e tente novamente");
         }
 
         cnpj.setNascimento(chooserNasc.getDate());
         if (cnpj.getNascimento() == null) {
-            throw new Exception("O campo Nascimento não pode ser vazio.\nVerifique e tente novamente");
+            throw new IllegalArgumentException("O campo Nascimento não pode ser vazio.\nVerifique e tente novamente");
         }
         cnpj.setNomeFantasia(fieldNomeFantasia.getText().trim().toUpperCase());
         cnpj.setCredito(Double.parseDouble(0 + fieldCredito.getText().replace(",", ".")));

@@ -62,10 +62,9 @@ public class Product implements Serializable, InterValueId {
 
     @Column(name = "sellingProfit")
     private BigDecimal profit;
-    
+
     @Column(name = "productImage")
     private String productImage;
-    
 
     @Column(name = "preco_compra")
     private BigDecimal precoCompra;
@@ -138,14 +137,22 @@ public class Product implements Serializable, InterValueId {
     }
 
     public BigDecimal getPrecoCompra() {
+        if (this.precoCompra == null) {
+            precoCompra = BigDecimal.ZERO;
+        }
+
         return precoCompra;
     }
 
     public void setPrecoCompra(BigDecimal precoCompra) {
+
         this.precoCompra = precoCompra;
     }
 
     public BigDecimal getPrecoVenda() {
+        if (this.precoVenda == null) {
+            precoVenda = BigDecimal.ZERO;
+        }
         return precoVenda;
     }
 
@@ -154,6 +161,9 @@ public class Product implements Serializable, InterValueId {
     }
 
     public Integer getWarranty() {
+        if (this.warranty == null) {
+            warranty = 0;
+        }
         return warranty;
     }
 
@@ -162,6 +172,9 @@ public class Product implements Serializable, InterValueId {
     }
 
     public BigDecimal getCommission() {
+        if (this.comission == null) {
+            comission = BigDecimal.ZERO;
+        }
         return comission;
     }
 
@@ -170,6 +183,9 @@ public class Product implements Serializable, InterValueId {
     }
 
     public BigDecimal getProfit() {
+        if (this.profit == null) {
+            profit = BigDecimal.ZERO;
+        }
         return profit;
     }
 
@@ -178,15 +194,15 @@ public class Product implements Serializable, InterValueId {
     }
 
     public String getProductImage() {
+        if (this.productImage == null) {
+            productImage = "";
+        }
         return productImage;
     }
 
     public void setProductImage(String productImage) {
         this.productImage = productImage;
     }
-    
-     
-    
 
     public Category getIdCategoria() {
         return idCategoria;
@@ -242,10 +258,7 @@ public class Product implements Serializable, InterValueId {
             return false;
         }
         Product other = (Product) object;
-        if ((this.produtoId == null && other.produtoId != null) || (this.produtoId != null && !this.produtoId.equals(other.produtoId))) {
-            return false;
-        }
-        return true;
+        return !((this.produtoId == null && other.produtoId != null) || (this.produtoId != null && !this.produtoId.equals(other.produtoId)));
     }
 
     @Override
