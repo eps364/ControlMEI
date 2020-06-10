@@ -1,6 +1,6 @@
 # Software ControlMEI
 
-This software was will development Java SE and implements is the sections down:
+This software was will development to Java SE and implements is the sections down:
 - person screen: customer, supplier, user
 - Product screen: product, category, product section, brand, product measures
 - Simple sale screen
@@ -16,7 +16,7 @@ Framework, library and CASE:
 - Database MySQL And Apache Derby for embedded
 
 ### Information
-The objects will send the data for generic class the database.
+The objects will send the data to generic class the database.
 
 `````java
 public abstract class Generic<T extends InterValueId> {
