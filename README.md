@@ -1,4 +1,4 @@
-# Software ControlMEI
+# Software ControlMEI to controlling stock
 
 This software was developed for Java SE and implements the functions below:
 - person screen: customer, supplier, user
