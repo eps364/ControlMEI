@@ -1,6 +1,6 @@
 # Software ControlMEI
 
-This software was will development to Java SE and implements is the sections down:
+This software was developed for Java SE and implements the functions below:
 - person screen: customer, supplier, user
 - Product screen: product, category, product section, brand, product measures
 - Simple sale screen
