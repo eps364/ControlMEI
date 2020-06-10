@@ -30,12 +30,12 @@ public class DialogCompany extends javax.swing.JDialog {
 
     }
 
-    public DialogCompany(java.awt.Frame parent, boolean modal, Company cnpj) {
+    public DialogCompany(java.awt.Frame parent, boolean modal, Company company) {
         super(parent, modal);
         initComponents();
         updateComboBox();
-        fields(cnpj);
-        this.companyCancel = cnpj;
+        fields(company);
+        this.companyCancel = company;
         this.formatNumber();
     }
 
@@ -53,33 +53,33 @@ public class DialogCompany extends javax.swing.JDialog {
         this.keyEventChooser();
     }
 
-    private void fields(Company cnpj) {
+    private void fields(Company company) {
         try {
-            this.company = cnpj;
+            this.company = company;
 
-            ckbSituacao.setSelected(cnpj.getPersonStatus());
+            ckbSituacao.setSelected(company.getPersonStatus());
 
-            fieldCode.setText(String.valueOf(cnpj.getId()));
-            fieldNome.setText(cnpj.getCompanyName());
-            fieldNomeFantasia.setText(cnpj.getFantasyName());
+            fieldCode.setText(String.valueOf(company.getId()));
+            fieldNome.setText(company.getCompanyName());
+            fieldNomeFantasia.setText(company.getFantasyName());
 
-            fieldCNPJ.setText(cnpj.getCnpjNumber());
-            fieldInscEstadual.setText(cnpj.getInscEstadual());
-            fieldInscMunicipal.setText(cnpj.getInscMunicipal());
-            chooserNasc.setDate(cnpj.getNascimento());
-            fieldCredito.setText(String.valueOf(cnpj.getValueCredit()).replace(".", ","));
+            fieldCNPJ.setText(company.getCnpjNumber());
+            fieldInscEstadual.setText(company.getInscEstadual());
+            fieldInscMunicipal.setText(company.getInscMunicipal());
+            chooserNasc.setDate(company.getNascimento());
+            fieldCredito.setText(String.valueOf(company.getValueCredit()).replace(".", ","));
 
-            fieldFone.setText(cnpj.getPhone());
-            fieldCelular.setText(cnpj.getCellPhone());
-            fieldWhatsapp.setText(cnpj.getWhatsapp());
-            fieldEmail.setText(cnpj.getEmail());
-            fieldRua.setText(cnpj.getStreet());
-            fieldReferencia.setText(cnpj.getReference());
-            fieldCep.setText(cnpj.getZipCode());
-            fieldBairro.setText(cnpj.getDistrictName());
-            fieldCidade.setText(cnpj.getCityName());
+            fieldFone.setText(company.getPhone());
+            fieldCelular.setText(company.getCellPhone());
+            fieldWhatsapp.setText(company.getWhatsapp());
+            fieldEmail.setText(company.getEmail());
+            fieldRua.setText(company.getStreet());
+            fieldReferencia.setText(company.getReference());
+            fieldCep.setText(company.getZipCode());
+            fieldBairro.setText(company.getDistrictName());
+            fieldCidade.setText(company.getCityName());
 
-            cbxUf.setSelectedItem(cnpj.getState());
+            cbxUf.setSelectedItem(company.getState());
         } catch (NullPointerException e) {
             System.out.println(e.getMessage());
         }
@@ -94,8 +94,8 @@ public class DialogCompany extends javax.swing.JDialog {
         jLabel16 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         cmdDispose = new javax.swing.JButton();
-        cmdGravar = new javax.swing.JButton();
-        cmdNovo = new javax.swing.JButton();
+        cmdSave = new javax.swing.JButton();
+        cmdNew = new javax.swing.JButton();
         jpnFields = new javax.swing.JPanel();
         fieldNome = new javax.swing.JTextField();
         fieldCredito = new javax.swing.JFormattedTextField();
@@ -134,7 +134,7 @@ public class DialogCompany extends javax.swing.JDialog {
         fieldInscEstadual = new javax.swing.JFormattedTextField();
         fieldNomeFantasia = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
-        cmdCancelar = new javax.swing.JButton();
+        cmdCancel = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
 
@@ -156,24 +156,24 @@ public class DialogCompany extends javax.swing.JDialog {
             }
         });
 
-        cmdGravar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/client_confirm.png"))); // NOI18N
-        cmdGravar.setText("Salvar");
-        cmdGravar.addActionListener(new java.awt.event.ActionListener() {
+        cmdSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/client_confirm.png"))); // NOI18N
+        cmdSave.setText("Salvar");
+        cmdSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdGravarActionPerformed(evt);
+                cmdSaveActionPerformed(evt);
             }
         });
-        cmdGravar.addKeyListener(new java.awt.event.KeyAdapter() {
+        cmdSave.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                cmdGravarKeyPressed(evt);
+                cmdSaveKeyPressed(evt);
             }
         });
 
-        cmdNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/client_add.png"))); // NOI18N
-        cmdNovo.setText("Novo");
-        cmdNovo.addActionListener(new java.awt.event.ActionListener() {
+        cmdNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/client_add.png"))); // NOI18N
+        cmdNew.setText("Novo");
+        cmdNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdNovoActionPerformed(evt);
+                cmdNewActionPerformed(evt);
             }
         });
 
@@ -521,12 +521,12 @@ public class DialogCompany extends javax.swing.JDialog {
 
         jpnFieldsLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel10, jLabel11, jLabel12, jLabel9});
 
-        cmdCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/reflesh.png"))); // NOI18N
-        cmdCancelar.setText("Cancelar");
-        cmdCancelar.setEnabled(false);
-        cmdCancelar.addActionListener(new java.awt.event.ActionListener() {
+        cmdCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/reflesh.png"))); // NOI18N
+        cmdCancel.setText("Cancelar");
+        cmdCancel.setEnabled(false);
+        cmdCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdCancelarActionPerformed(evt);
+                cmdCancelActionPerformed(evt);
             }
         });
 
@@ -539,11 +539,11 @@ public class DialogCompany extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jpnFields, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(cmdNovo)
+                        .addComponent(cmdNew)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmdGravar)
+                        .addComponent(cmdSave)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmdCancelar)
+                        .addComponent(cmdCancel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(cmdDispose)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -555,11 +555,11 @@ public class DialogCompany extends javax.swing.JDialog {
                 .addComponent(jpnFields, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmdNovo)
-                    .addComponent(cmdGravar)
+                    .addComponent(cmdNew)
+                    .addComponent(cmdSave)
                     .addComponent(cmdDispose)
-                    .addComponent(cmdCancelar))
-                .addContainerGap(23, Short.MAX_VALUE))
+                    .addComponent(cmdCancel))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -587,7 +587,7 @@ public class DialogCompany extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_cmdDisposeActionPerformed
 
-    private void cmdGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdGravarActionPerformed
+    private void cmdSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSaveActionPerformed
         try {
             if (ControlPanel.emailValidate(fieldEmail.getText())) {
                 this.save();
@@ -597,23 +597,23 @@ public class DialogCompany extends javax.swing.JDialog {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-    }//GEN-LAST:event_cmdGravarActionPerformed
+    }//GEN-LAST:event_cmdSaveActionPerformed
 
 
-    private void cmdNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdNovoActionPerformed
+    private void cmdNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdNewActionPerformed
         this.company = new Company();
         ControlPanel.clean(jpnFields);
         this.eventClick();
-    }//GEN-LAST:event_cmdNovoActionPerformed
+    }//GEN-LAST:event_cmdNewActionPerformed
 
     private void eventClick() {
-        boolean isClick = cmdNovo.isEnabled();
+        boolean isClick = cmdNew.isEnabled();
         if (isClick) {
-            cmdNovo.setEnabled(false);
-            cmdCancelar.setEnabled(true);
+            cmdNew.setEnabled(false);
+            cmdCancel.setEnabled(true);
         } else {
-            cmdCancelar.setEnabled(false);
-            cmdNovo.setEnabled(true);
+            cmdCancel.setEnabled(false);
+            cmdNew.setEnabled(true);
         }
     }
     private void fieldNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldNomeKeyPressed
@@ -724,15 +724,15 @@ public class DialogCompany extends javax.swing.JDialog {
 
     private void cbxUfKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbxUfKeyPressed
         if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
-            cmdGravar.requestFocus();
+            cmdSave.requestFocus();
         }
     }//GEN-LAST:event_cbxUfKeyPressed
 
-    private void cmdGravarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmdGravarKeyPressed
+    private void cmdSaveKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmdSaveKeyPressed
         if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
-            cmdGravarActionPerformed(null);
+            cmdSaveActionPerformed(null);
         }
-    }//GEN-LAST:event_cmdGravarKeyPressed
+    }//GEN-LAST:event_cmdSaveKeyPressed
 
     private void fieldInscEstadualKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldInscEstadualKeyPressed
         if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
@@ -740,10 +740,10 @@ public class DialogCompany extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_fieldInscEstadualKeyPressed
 
-    private void cmdCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCancelarActionPerformed
+    private void cmdCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCancelActionPerformed
         fields(companyCancel);
         this.eventClick();
-    }//GEN-LAST:event_cmdCancelarActionPerformed
+    }//GEN-LAST:event_cmdCancelActionPerformed
 
     private void fieldNomeFantasiaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldNomeFantasiaKeyPressed
         if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
@@ -849,10 +849,10 @@ public class DialogCompany extends javax.swing.JDialog {
     private javax.swing.JComboBox<entity.stage.State> cbxUf;
     private com.toedter.calendar.JDateChooser chooserNasc;
     private javax.swing.JCheckBox ckbSituacao;
-    private javax.swing.JButton cmdCancelar;
+    private javax.swing.JButton cmdCancel;
     private javax.swing.JButton cmdDispose;
-    private javax.swing.JButton cmdGravar;
-    private javax.swing.JButton cmdNovo;
+    private javax.swing.JButton cmdNew;
+    private javax.swing.JButton cmdSave;
     private javax.swing.JTextField fieldBairro;
     private javax.swing.JFormattedTextField fieldCNPJ;
     private javax.swing.JFormattedTextField fieldCelular;

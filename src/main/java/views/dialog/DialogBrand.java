@@ -5,7 +5,6 @@ import enu.ButtonEnum;
 import impl.ImplBrand;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
-import static java.lang.Compiler.command;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;

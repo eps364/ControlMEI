@@ -21,7 +21,7 @@
             <Menu class="javax.swing.JMenu" name="jMenu2">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/views/img/produto.png"/>
+                  <Image iconType="3" name="/img/prod-collect.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Produto"/>
               </Properties>
@@ -32,7 +32,7 @@
                       <KeyStroke key="Ctrl+C"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/views/img/categoria.png"/>
+                      <Image iconType="3" name="/img/categoria.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Categoria"/>
                   </Properties>
@@ -48,7 +48,7 @@
                       <KeyStroke key="Ctrl+M"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/views/img/icon-marca.png"/>
+                      <Image iconType="3" name="/img/icon-marca.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Marca"/>
                   </Properties>
@@ -64,7 +64,7 @@
                       <KeyStroke key="Shift+Ctrl+M"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/views/img/medida.png"/>
+                      <Image iconType="3" name="/img/medida.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Medida"/>
                   </Properties>
@@ -80,7 +80,7 @@
                       <KeyStroke key="Shift+Ctrl+P"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/views/img/produto.png"/>
+                      <Image iconType="3" name="/img/produto.png"/>
                     </Property>
                     <Property name="mnemonic" type="int" value="115"/>
                     <Property name="text" type="java.lang.String" value="Produto"/>
@@ -97,7 +97,7 @@
                       <KeyStroke key="Ctrl+S"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/views/img/secao.png"/>
+                      <Image iconType="3" name="/img/secao.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Se&#xe7;&#xe3;o"/>
                   </Properties>
@@ -114,7 +114,7 @@
             <Menu class="javax.swing.JMenu" name="jMenu1">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/views/img/person.png"/>
+                  <Image iconType="3" name="/img/person.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Pessoa"/>
               </Properties>
@@ -127,7 +127,7 @@
                       <KeyStroke key="Ctrl+F"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/views/img/cpf.png"/>
+                      <Image iconType="3" name="/img/cpf.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="F&#xed;sica"/>
                   </Properties>
@@ -143,7 +143,7 @@
                       <KeyStroke key="Ctrl+J"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/views/img/cnpj.png"/>
+                      <Image iconType="3" name="/img/cnpj.png"/>
                     </Property>
                     <Property name="mnemonic" type="int" value="111"/>
                     <Property name="text" type="java.lang.String" value="Jur&#xed;dica"/>
@@ -160,7 +160,7 @@
                       <KeyStroke key="Shift+Ctrl+F"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/views/img/employer.png"/>
+                      <Image iconType="3" name="/img/employer.png"/>
                     </Property>
                     <Property name="mnemonic" type="int" value="97"/>
                     <Property name="text" type="java.lang.String" value="Funcion&#xe1;rio"/>
@@ -178,7 +178,7 @@
                   <KeyStroke key="Ctrl+Q"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/views/img/power.png"/>
+                  <Image iconType="3" name="/img/power.png"/>
                 </Property>
                 <Property name="mnemonic" type="int" value="120"/>
                 <Property name="text" type="java.lang.String" value="Sair"/>
@@ -194,7 +194,7 @@
         <Menu class="javax.swing.JMenu" name="editMenu">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/views/img/report.png"/>
+              <Image iconType="3" name="/img/report.png"/>
             </Property>
             <Property name="mnemonic" type="int" value="101"/>
             <Property name="text" type="java.lang.String" value="Relat&#xf3;rios"/>
@@ -206,7 +206,7 @@
                   <KeyStroke key="Shift+E"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/views/img/rigth.png"/>
+                  <Image iconType="3" name="/img/rigth.png"/>
                 </Property>
                 <Property name="mnemonic" type="int" value="116"/>
                 <Property name="text" type="java.lang.String" value="Entrada de Mercadoria"/>
@@ -218,7 +218,7 @@
                   <KeyStroke key="Shift+S"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/views/img/left.png"/>
+                  <Image iconType="3" name="/img/left.png"/>
                 </Property>
                 <Property name="mnemonic" type="int" value="121"/>
                 <Property name="text" type="java.lang.String" value="Sa&#xed;da de Mercadoria"/>
@@ -233,7 +233,7 @@
                   <KeyStroke key="Shift+D"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/views/img/despesa.png"/>
+                  <Image iconType="3" name="/img/despesa.png"/>
                 </Property>
                 <Property name="mnemonic" type="int" value="112"/>
                 <Property name="text" type="java.lang.String" value="Despesas"/>
@@ -245,7 +245,7 @@
                   <KeyStroke key="Shift+Ctrl+S"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/views/img/services.png"/>
+                  <Image iconType="3" name="/img/services.png"/>
                 </Property>
                 <Property name="mnemonic" type="int" value="100"/>
                 <Property name="text" type="java.lang.String" value="Servi&#xe7;os"/>
@@ -256,7 +256,7 @@
         <Menu class="javax.swing.JMenu" name="helpMenu">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/views/img/help.png"/>
+              <Image iconType="3" name="/img/help.png"/>
             </Property>
             <Property name="mnemonic" type="int" value="104"/>
             <Property name="text" type="java.lang.String" value="Sobre..."/>
@@ -268,7 +268,7 @@
                   <KeyStroke key="Shift+Ctrl+O"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/views/img/config.png"/>
+                  <Image iconType="3" name="/img/config.png"/>
                 </Property>
                 <Property name="mnemonic" type="int" value="99"/>
                 <Property name="text" type="java.lang.String" value="Sistema"/>
@@ -283,7 +283,7 @@
                   <KeyStroke key="Shift+Ctrl+A"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/views/img/help-item.png"/>
+                  <Image iconType="3" name="/img/help-item.png"/>
                 </Property>
                 <Property name="mnemonic" type="int" value="97"/>
                 <Property name="text" type="java.lang.String" value="Ajuda"/>

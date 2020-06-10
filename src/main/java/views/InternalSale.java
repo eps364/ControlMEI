@@ -12,7 +12,6 @@ import java.util.Objects;
 import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import util.ControlPanel;
 import util.FormatNumber;
 import views.dialog.CustomerList;
 import views.dialog.ProductList;

@@ -1,10 +1,8 @@
 package views;
 
 import entity.product.Stock;
-import entity.product.Product;
 import impl.ImplProduct;
 import java.awt.event.KeyEvent;
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import javax.swing.JFrame;
 import javax.swing.RowFilter;
@@ -66,7 +64,7 @@ public class InternalProduct extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         lblTeste = new javax.swing.JLabel();
 
-        itemEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/client_edit.png"))); // NOI18N
+        itemEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/edit-pro.png"))); // NOI18N
         itemEditar.setText("Editar linha");
         itemEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -75,7 +73,7 @@ public class InternalProduct extends javax.swing.JInternalFrame {
         });
         menuEditDelete.add(itemEditar);
 
-        itemDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/client_del.png"))); // NOI18N
+        itemDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/delete-pro.png"))); // NOI18N
         itemDelete.setText("Deletar linha");
         itemDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -213,9 +211,8 @@ public class InternalProduct extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblTeste, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(query)))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(query))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)

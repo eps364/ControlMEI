@@ -99,7 +99,7 @@ public class MDIApplication extends javax.swing.JFrame {
         fileMenu.setToolTipText("");
         fileMenu.add(jSeparator2);
 
-        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/produto.png"))); // NOI18N
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/prod-collect.png"))); // NOI18N
         jMenu2.setText("Produto");
 
         itemCategoria.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
