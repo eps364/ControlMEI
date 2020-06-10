@@ -38,7 +38,7 @@ public class ProductList extends javax.swing.JDialog {
                 c.getBrand()
 
             });
-           
+
         });
 
     }
@@ -110,8 +110,15 @@ public class ProductList extends javax.swing.JDialog {
 
         jLabel2.setText("Pesquisar:");
 
+        cmdDispose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/power16.png"))); // NOI18N
         cmdDispose.setText("Sair");
+        cmdDispose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdDisposeActionPerformed(evt);
+            }
+        });
 
+        cmdAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/add16.png"))); // NOI18N
         cmdAdd.setText("Adicionar");
         cmdAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,7 +153,7 @@ public class ProductList extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(queryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdDispose)
@@ -195,17 +202,15 @@ public class ProductList extends javax.swing.JDialog {
 
     private void cmdAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdAddActionPerformed
         this.addProduto();
-        this.dispose();
 
     }//GEN-LAST:event_cmdAddActionPerformed
 
     private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
 
         if (evt.getClickCount() == 2) {
-
-            this.dispose();
+            cmdAddActionPerformed(null);
         }
-        this.addProduto();
+
     }//GEN-LAST:event_masterTableMouseClicked
 
     private void masterTableKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_masterTableKeyPressed
@@ -215,11 +220,18 @@ public class ProductList extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_masterTableKeyPressed
 
-    private void addProduto() {
-        int value = Integer.parseInt(masterTable.getValueAt(masterTable.getSelectedRow(), 0).toString());
-        
+    private void cmdDisposeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdDisposeActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_cmdDisposeActionPerformed
 
-        produto = crud.find(Stock.class, value);
+    private void addProduto() {
+
+        if (masterTable.getSelectedRow() != -1) {
+            int value = Integer.parseInt(masterTable.getValueAt(masterTable.getSelectedRow(), 0).toString());
+            produto = crud.find(Stock.class, value);
+            this.dispose();
+        }
+
     }
 
     public static void main(String args[]) {

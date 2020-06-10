@@ -16,12 +16,12 @@ import util.FormatNumber;
 public class DialogCompany extends javax.swing.JDialog {
 
     ImplCompany crudPessoa;
-    private Company cnpj;
-    private Company cancel;
+    private Company company;
+    private Company companyCancel;
 
     public DialogCompany(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        this.cnpj = new Company();
+        this.company = new Company();
         initComponents();
         this.chooserNasc.setDate(new Date());
         updateComboBox();
@@ -35,7 +35,7 @@ public class DialogCompany extends javax.swing.JDialog {
         initComponents();
         updateComboBox();
         fields(cnpj);
-        this.cancel = cnpj;
+        this.companyCancel = cnpj;
         this.formatNumber();
     }
 
@@ -55,7 +55,7 @@ public class DialogCompany extends javax.swing.JDialog {
 
     private void fields(Company cnpj) {
         try {
-            this.cnpj = cnpj;
+            this.company = cnpj;
 
             ckbSituacao.setSelected(cnpj.getPersonStatus());
 
@@ -589,7 +589,11 @@ public class DialogCompany extends javax.swing.JDialog {
 
     private void cmdGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdGravarActionPerformed
         try {
-            this.save();
+            if (ControlPanel.emailValidate(fieldEmail.getText())) {
+                this.save();
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Invalid email.\nCheck and try again.");
+            }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
@@ -597,7 +601,7 @@ public class DialogCompany extends javax.swing.JDialog {
 
 
     private void cmdNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdNovoActionPerformed
-        this.cnpj = new Company();
+        this.company = new Company();
         ControlPanel.clean(jpnFields);
         this.eventClick();
     }//GEN-LAST:event_cmdNovoActionPerformed
@@ -737,7 +741,7 @@ public class DialogCompany extends javax.swing.JDialog {
     }//GEN-LAST:event_fieldInscEstadualKeyPressed
 
     private void cmdCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCancelarActionPerformed
-        fields(cancel);
+        fields(companyCancel);
         this.eventClick();
     }//GEN-LAST:event_cmdCancelarActionPerformed
 
@@ -749,35 +753,37 @@ public class DialogCompany extends javax.swing.JDialog {
 
     private void save() throws Exception {
 
-        cnpj.setCompanyName(fieldNome.getText().toUpperCase().trim());
-        if (cnpj.getCompanyName().equals("")) {
+        company.setCompanyName(fieldNome.getText().toUpperCase().trim());
+        if (company.getCompanyName().equals("")) {
             throw new IllegalArgumentException("O campo razão social não pode ser vazio.\nVerifique e tente novamente");
         }
 
-        cnpj.setDateBirth(chooserNasc.getDate());
-        if (cnpj.getNascimento() == null) {
+        company.setDateBirth(chooserNasc.getDate());
+        if (company.getNascimento() == null) {
             throw new IllegalArgumentException("O campo Nascimento não pode ser vazio.\nVerifique e tente novamente");
         }
-        cnpj.setFantasyName(fieldNomeFantasia.getText().trim().toUpperCase());
-        cnpj.setValueCredit(Double.parseDouble(0 + fieldCredito.getText().replace(",", ".")));
-        cnpj.setPersonStatus(ckbSituacao.isSelected());
-        cnpj.setCnpjNumber(fieldCNPJ.getText());
-        cnpj.setInscEstadual(fieldInscEstadual.getText());
-        cnpj.setInscMunicipal(fieldInscMunicipal.getText());
-        cnpj.setPhone(fieldFone.getText());
-        cnpj.setCellPhone(fieldCelular.getText());
-        cnpj.setWhatsapp(fieldWhatsapp.getText());
-        cnpj.setEmail(fieldEmail.getText().toLowerCase().trim());
-        cnpj.setStreet(fieldRua.getText().toUpperCase().trim());
-        cnpj.setReference(fieldReferencia.getText().toUpperCase().trim());
-        cnpj.setZipCode(fieldCep.getText());
-        cnpj.setDistrictName(fieldBairro.getText().toUpperCase().trim());
-        cnpj.setCityName(fieldCidade.getText().toUpperCase().trim());
+        company.setFantasyName(fieldNomeFantasia.getText().trim().toUpperCase());
+        company.setValueCredit(Double.parseDouble(0 + fieldCredito.getText().replace(",", ".")));
+        company.setPersonStatus(ckbSituacao.isSelected());
+        company.setCnpjNumber(fieldCNPJ.getText());
+        company.setInscEstadual(fieldInscEstadual.getText());
+        company.setInscMunicipal(fieldInscMunicipal.getText());
+        company.setPhone(fieldFone.getText());
+        company.setCellPhone(fieldCelular.getText());
+        company.setWhatsapp(fieldWhatsapp.getText());
+        company.setEmail(fieldEmail.getText().toLowerCase().trim());
+        company.setStreet(fieldRua.getText().toUpperCase().trim());
+        company.setReference(fieldReferencia.getText().toUpperCase().trim());
+        company.setZipCode(fieldCep.getText());
+        company.setDistrictName(fieldBairro.getText().toUpperCase().trim());
+        company.setCityName(fieldCidade.getText().toUpperCase().trim());
 
-        cnpj.setState((State) cbxUf.getSelectedItem());
+        company.setState((State) cbxUf.getSelectedItem());
         crudPessoa = new ImplCompany();
-        crudPessoa.save(cnpj);
-        JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!");
+        crudPessoa.save(company);
+        if (ControlPanel.optionPaneSave("Saved uccessfully!")) {
+            cmdDisposeActionPerformed(null);
+        }
 
     }
 

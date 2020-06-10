@@ -237,7 +237,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="cmdCancel" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="cmdExit" min="-2" max="-2" attributes="0"/>
+                                      <Component id="cmdDispose" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
@@ -279,7 +279,7 @@
                               <Component id="lblProdutcId" min="-2" pref="17" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="2" attributes="0">
-                                  <Component id="checkImported" alignment="2" pref="26" max="32767" attributes="0"/>
+                                  <Component id="checkImported" alignment="2" pref="27" max="32767" attributes="0"/>
                                   <Component id="fieldProductId" alignment="2" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -321,7 +321,7 @@
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
-                          <Component id="cbxSupplier" alignment="2" pref="27" max="32767" attributes="0"/>
+                          <Component id="cbxSupplier" alignment="2" pref="28" max="32767" attributes="0"/>
                           <Component id="cmdSupplier" alignment="2" max="32767" attributes="0"/>
                           <Component id="cbxProductSection" alignment="0" max="32767" attributes="0"/>
                       </Group>
@@ -366,7 +366,7 @@
                           <Component id="cmdNew" alignment="3" max="32767" attributes="0"/>
                           <Component id="cmdSave" alignment="3" max="32767" attributes="0"/>
                           <Component id="cmdCancel" alignment="3" max="32767" attributes="0"/>
-                          <Component id="cmdExit" alignment="3" max="32767" attributes="0"/>
+                          <Component id="cmdDispose" alignment="3" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -653,7 +653,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdCancelActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="cmdExit">
+            <Component class="javax.swing.JButton" name="cmdDispose">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/views/img/power.png"/>
@@ -661,7 +661,7 @@
                 <Property name="text" type="java.lang.String" value="Sair"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdExitActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdDisposeActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lblWarranty">

@@ -87,7 +87,7 @@ public class Person implements Serializable, InterValueId {
     @ManyToOne(optional = false)
     private State state;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "costumer")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
     private Collection<Sale> saleCollection;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "supplier")

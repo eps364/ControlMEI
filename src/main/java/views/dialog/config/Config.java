@@ -21,7 +21,7 @@ public class Config extends javax.swing.JDialog {
 
     private void updateConfig() {
 //        img = Toolkit.getDefaultToolkit().getImage(Configuration.getLogo());
-        imgLogo.setIcon(new ImageIcon(img));
+//        imgLogo.setIcon(new ImageIcon(img));
     }
 
     @SuppressWarnings("unchecked")
@@ -113,7 +113,7 @@ public class Config extends javax.swing.JDialog {
 
         jTabbedPane1.addTab("tab2", jPanel3);
 
-        cmdSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/img/save.png"))); // NOI18N
+        cmdSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/save.png"))); // NOI18N
         cmdSalvar.setText("Salvar");
         cmdSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,7 +121,7 @@ public class Config extends javax.swing.JDialog {
             }
         });
 
-        cmdExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/img/power.png"))); // NOI18N
+        cmdExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/power.png"))); // NOI18N
         cmdExit.setText("Sair");
         cmdExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

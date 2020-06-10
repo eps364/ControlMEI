@@ -117,7 +117,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="queryField" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="318" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="316" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="cmdDispose" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -205,11 +205,20 @@
             </Component>
             <Component class="javax.swing.JButton" name="cmdDispose">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/img/power16.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Sair"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmdDisposeActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="cmdAdd">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/img/add16.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Adicionar"/>
               </Properties>
               <Events>

@@ -316,7 +316,7 @@ public class MDIApplication extends javax.swing.JFrame {
     }//GEN-LAST:event_itemCNPJActionPerformed
 
     private void itemCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCPFActionPerformed
-        updateScreen(new InternalCostumer());
+        updateScreen(new InternalCustomer());
     }//GEN-LAST:event_itemCPFActionPerformed
 
     private void itemCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCategoriaActionPerformed

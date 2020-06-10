@@ -1,9 +1,11 @@
 package views.dialog;
 
 import entity.product.Brand;
+import enu.ButtonEnum;
 import impl.ImplBrand;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
+import static java.lang.Compiler.command;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -62,10 +64,15 @@ public class DialogBrand extends javax.swing.JDialog {
                 this.modifRowTable(row);
                 this.fields();
             }
-            JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!");
+            if (ControlPanel.optionPaneSave("Saved successfully!")) {
+                cmdDisposeActionPerformed(null);
+            }
         } catch (HeadlessException | IllegalArgumentException e) {
 
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        } finally {
+            this.setEnableField(ControlPanel.controlDialogButton(ButtonEnum.SAVE_BUTTON, cmdDelete, cmdNew, cmdSave));
+
         }
 
     }
@@ -77,18 +84,18 @@ public class DialogBrand extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jpnFields = new javax.swing.JPanel();
-        cmdNovo = new javax.swing.JButton();
+        cmdNew = new javax.swing.JButton();
         fieldCode = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         masterTable = new javax.swing.JTable();
         query = new javax.swing.JTextField();
         fieldCategoria = new javax.swing.JTextField();
-        fieldClose = new javax.swing.JButton();
-        cmdSalvar = new javax.swing.JButton();
-        cmdDeletar = new javax.swing.JButton();
+        cmdDispose = new javax.swing.JButton();
+        cmdSave = new javax.swing.JButton();
+        cmdDelete = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        cmdCancel = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
 
         jLabel3.setText("jLabel3");
@@ -102,11 +109,11 @@ public class DialogBrand extends javax.swing.JDialog {
 
         jpnFields.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        cmdNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/new-cate.png"))); // NOI18N
-        cmdNovo.setText("Novo");
-        cmdNovo.addActionListener(new java.awt.event.ActionListener() {
+        cmdNew.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/new-cate.png"))); // NOI18N
+        cmdNew.setText("Novo");
+        cmdNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdNovoActionPerformed(evt);
+                cmdNewActionPerformed(evt);
             }
         });
 
@@ -163,33 +170,33 @@ public class DialogBrand extends javax.swing.JDialog {
             }
         });
 
-        fieldClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/power.png"))); // NOI18N
-        fieldClose.setText("Sair");
-        fieldClose.addActionListener(new java.awt.event.ActionListener() {
+        cmdDispose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/power.png"))); // NOI18N
+        cmdDispose.setText("Sair");
+        cmdDispose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldCloseActionPerformed(evt);
+                cmdDisposeActionPerformed(evt);
             }
         });
 
-        cmdSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/save-cate.png"))); // NOI18N
-        cmdSalvar.setText("Salvar");
-        cmdSalvar.setEnabled(false);
-        cmdSalvar.addActionListener(new java.awt.event.ActionListener() {
+        cmdSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/save-cate.png"))); // NOI18N
+        cmdSave.setText("Salvar");
+        cmdSave.setEnabled(false);
+        cmdSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdSalvarActionPerformed(evt);
+                cmdSaveActionPerformed(evt);
             }
         });
-        cmdSalvar.addKeyListener(new java.awt.event.KeyAdapter() {
+        cmdSave.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                cmdSalvarKeyPressed(evt);
+                cmdSaveKeyPressed(evt);
             }
         });
 
-        cmdDeletar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/delete-cate.png"))); // NOI18N
-        cmdDeletar.setText("Deletar");
-        cmdDeletar.addActionListener(new java.awt.event.ActionListener() {
+        cmdDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/delete-cate.png"))); // NOI18N
+        cmdDelete.setText("Deletar");
+        cmdDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdDeletarActionPerformed(evt);
+                cmdDeleteActionPerformed(evt);
             }
         });
 
@@ -197,11 +204,11 @@ public class DialogBrand extends javax.swing.JDialog {
 
         jLabel1.setText("Marca:");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/reflesh.png"))); // NOI18N
-        jButton1.setText("Cancelar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        cmdCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/reflesh.png"))); // NOI18N
+        cmdCancel.setText("Cancelar");
+        cmdCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                cmdCancelActionPerformed(evt);
             }
         });
 
@@ -218,20 +225,20 @@ public class DialogBrand extends javax.swing.JDialog {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnFieldsLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(fieldClose))
+                        .addComponent(cmdDispose))
                     .addGroup(jpnFieldsLayout.createSequentialGroup()
                         .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel4)
                             .addComponent(fieldCode, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jpnFieldsLayout.createSequentialGroup()
-                                .addComponent(cmdNovo)
+                                .addComponent(cmdNew)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmdSalvar)
+                                .addComponent(cmdSave)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmdDeletar)
+                                .addComponent(cmdDelete)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1))
+                                .addComponent(cmdCancel))
                             .addGroup(jpnFieldsLayout.createSequentialGroup()
                                 .addComponent(query, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -258,11 +265,11 @@ public class DialogBrand extends javax.swing.JDialog {
                     .addComponent(query, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(5, 5, 5)
                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmdNovo)
-                    .addComponent(cmdSalvar)
-                    .addComponent(cmdDeletar)
-                    .addComponent(fieldClose)
-                    .addComponent(jButton1))
+                    .addComponent(cmdNew)
+                    .addComponent(cmdSave)
+                    .addComponent(cmdDelete)
+                    .addComponent(cmdDispose)
+                    .addComponent(cmdCancel))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -300,7 +307,7 @@ public class DialogBrand extends javax.swing.JDialog {
 
     private void masterTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_masterTableMouseClicked
         this.fields();
-        this.enableFields(true);
+        this.setEnableField(ControlPanel.controlDialogButton(ButtonEnum.MASTER_TABLE, cmdDelete, cmdNew, cmdSave));
 
 
     }//GEN-LAST:event_masterTableMouseClicked
@@ -317,18 +324,18 @@ public class DialogBrand extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_queryKeyReleased
 
-    private void fieldCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldCloseActionPerformed
+    private void cmdDisposeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdDisposeActionPerformed
         this.dispose();
-    }//GEN-LAST:event_fieldCloseActionPerformed
+    }//GEN-LAST:event_cmdDisposeActionPerformed
 
-    private void cmdNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdNovoActionPerformed
+    private void cmdNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdNewActionPerformed
         fieldCategoria.requestFocus();
-        this.enableFields(true);
+        this.setEnableField(ControlPanel.controlDialogButton(ButtonEnum.NEW_BUTTON, cmdDelete, cmdNew, cmdSave));
         marca = new Brand();
         ControlPanel.clean(jpnFields);
-    }//GEN-LAST:event_cmdNovoActionPerformed
+    }//GEN-LAST:event_cmdNewActionPerformed
 
-    private void cmdDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdDeletarActionPerformed
+    private void cmdDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdDeleteActionPerformed
 
         if (masterTable.getSelectedRow() != -1) {
             int row = masterTable.getSelectedRow();
@@ -348,29 +355,33 @@ public class DialogBrand extends javax.swing.JDialog {
                 masterTable.setRowSelectionInterval(row, row);
 
             }
+            this.setEnableField(ControlPanel.controlDialogButton(ButtonEnum.SAVE_BUTTON, cmdDelete, cmdNew, cmdSave));
             fields();
+            if (ControlPanel.optionPaneSave("Successfully deleted!")) {
+                cmdDisposeActionPerformed(null);
+            }
 
         }
-    }//GEN-LAST:event_cmdDeletarActionPerformed
+    }//GEN-LAST:event_cmdDeleteActionPerformed
 
-    private void cmdSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSalvarActionPerformed
+    private void cmdSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSaveActionPerformed
 
         this.save();
 
 
-    }//GEN-LAST:event_cmdSalvarActionPerformed
+    }//GEN-LAST:event_cmdSaveActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void cmdCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCancelActionPerformed
 
         ControlPanel.clean(jpnFields);
-        this.enableFields(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        this.setEnableField(ControlPanel.controlDialogButton(ButtonEnum.CANCEL_BUTTON, cmdDelete, cmdNew, cmdSave));
+    }//GEN-LAST:event_cmdCancelActionPerformed
 
-    private void cmdSalvarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmdSalvarKeyPressed
+    private void cmdSaveKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cmdSaveKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             this.save();
         }
-    }//GEN-LAST:event_cmdSalvarKeyPressed
+    }//GEN-LAST:event_cmdSaveKeyPressed
 
     private void masterTableKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_masterTableKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_UP || evt.getKeyCode() == KeyEvent.VK_DOWN) {
@@ -382,16 +393,14 @@ public class DialogBrand extends javax.swing.JDialog {
 
     private void fieldCategoriaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldCategoriaKeyPressed
         if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
-            cmdSalvar.requestFocus();
+            cmdSave.requestFocus();
         }
     }//GEN-LAST:event_fieldCategoriaKeyPressed
 
-    private void enableFields(boolean is) {
+    private void setEnableField(boolean is) {
 
         fieldCode.setEnabled(is);
         fieldCategoria.setEnabled(is);
-        cmdSalvar.setEnabled(is);
-        cmdNovo.setEnabled(!is);
 
     }
 
@@ -437,13 +446,13 @@ public class DialogBrand extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cmdDeletar;
-    private javax.swing.JButton cmdNovo;
-    private javax.swing.JButton cmdSalvar;
+    private javax.swing.JButton cmdCancel;
+    private javax.swing.JButton cmdDelete;
+    private javax.swing.JButton cmdDispose;
+    private javax.swing.JButton cmdNew;
+    private javax.swing.JButton cmdSave;
     private javax.swing.JTextField fieldCategoria;
-    private javax.swing.JButton fieldClose;
     private javax.swing.JTextField fieldCode;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

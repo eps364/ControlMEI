@@ -1,11 +1,7 @@
 package views.dialog;
 
 import entity.person.Person;
-import entity.product.Category;
-import entity.product.Brand;
-import entity.product.Measure;
-import entity.product.Stock;
-import entity.product.ProductSection;
+import entity.product.*;
 import enu.FieldChar;
 import impl.ImplCategory;
 import impl.ImplBrand;
@@ -13,7 +9,6 @@ import impl.ImplCompany;
 import impl.ImplMeasure;
 import impl.ImplProduct;
 import impl.ImplSection;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import javax.swing.ImageIcon;
@@ -172,7 +167,9 @@ public class DialogProduct extends javax.swing.JDialog {
 
         stock.setProductStatus(condicao.toUpperCase());
         crud.save(stock);
-        JOptionPane.showMessageDialog(rootPane, "Salvo com sucesso!");
+        if (ControlPanel.optionPaneSave("Saved successfully!")) {
+            cmdDisposeActionPerformed(null);
+        }
     }
 
     private void checkProduto(String value) {
@@ -243,7 +240,7 @@ public class DialogProduct extends javax.swing.JDialog {
         cmdNew = new javax.swing.JButton();
         cmdSave = new javax.swing.JButton();
         cmdCancel = new javax.swing.JButton();
-        cmdExit = new javax.swing.JButton();
+        cmdDispose = new javax.swing.JButton();
         lblWarranty = new javax.swing.JLabel();
         lblCommission = new javax.swing.JLabel();
         fieldCommission = new javax.swing.JFormattedTextField();
@@ -431,11 +428,11 @@ public class DialogProduct extends javax.swing.JDialog {
             }
         });
 
-        cmdExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/power.png"))); // NOI18N
-        cmdExit.setText("Sair");
-        cmdExit.addActionListener(new java.awt.event.ActionListener() {
+        cmdDispose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/power.png"))); // NOI18N
+        cmdDispose.setText("Sair");
+        cmdDispose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdExitActionPerformed(evt);
+                cmdDisposeActionPerformed(evt);
             }
         });
 
@@ -558,7 +555,7 @@ public class DialogProduct extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(cmdCancel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cmdExit))
+                                .addComponent(cmdDispose))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnFieldsLayout.createSequentialGroup()
                                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jpnFieldsLayout.createSequentialGroup()
@@ -587,7 +584,7 @@ public class DialogProduct extends javax.swing.JDialog {
                         .addComponent(lblProdutcId, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(checkImported, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                            .addComponent(checkImported, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
                             .addComponent(fieldProductId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jpnFieldsLayout.createSequentialGroup()
                         .addGap(36, 36, 36)
@@ -619,7 +616,7 @@ public class DialogProduct extends javax.swing.JDialog {
                     .addComponent(lblSupplier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(cbxSupplier, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                    .addComponent(cbxSupplier, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
                     .addComponent(cmdSupplier, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cbxProductSection, javax.swing.GroupLayout.Alignment.LEADING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -656,7 +653,7 @@ public class DialogProduct extends javax.swing.JDialog {
                     .addComponent(cmdNew, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cmdSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(cmdCancel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmdExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cmdDispose, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -692,9 +689,9 @@ public class DialogProduct extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cmdExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdExitActionPerformed
+    private void cmdDisposeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdDisposeActionPerformed
         this.dispose();
-    }//GEN-LAST:event_cmdExitActionPerformed
+    }//GEN-LAST:event_cmdDisposeActionPerformed
 
     private void cmdCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCancelActionPerformed
         stock = this.rollback;
@@ -865,7 +862,7 @@ public class DialogProduct extends javax.swing.JDialog {
     private javax.swing.JComboBox<entity.product.Measure> cbxUnit;
     private javax.swing.JCheckBox checkImported;
     private javax.swing.JButton cmdCancel;
-    private javax.swing.JButton cmdExit;
+    private javax.swing.JButton cmdDispose;
     private javax.swing.JButton cmdNew;
     private javax.swing.JButton cmdSave;
     private javax.swing.JButton cmdSupplier;

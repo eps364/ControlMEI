@@ -10,10 +10,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import util.ControlPanel;
 import util.FormatNumber;
-import views.dialog.CostumerList;
+import views.dialog.CustomerList;
 import views.dialog.ProductList;
 
 public class InternalSale extends javax.swing.JInternalFrame {
@@ -450,14 +451,19 @@ public class InternalSale extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cmdRemoverActionPerformed
 
     private void cmdBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdBuscar1ActionPerformed
-        CostumerList client = new CostumerList(new javax.swing.JFrame(), true);
+        CustomerList client = new CustomerList(new javax.swing.JFrame(), true);
         client.setVisible(true);
         clientSelected(client.getCliente());
 
     }//GEN-LAST:event_cmdBuscar1ActionPerformed
 
     private void clientSelected(Person person){
-       fieldClient.setText(person.getCompanyName());
+        
+        try {
+             fieldClient.setText(person.getCompanyName());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Not found costumer!");
+        }
     }
     
     private void selectItem(Stock item) {

@@ -13,14 +13,14 @@
     <class>entity.product.ProductSection</class>
     <class>entity.product.Stock</class>
     <class>entity.person.Company</class>
-    <class>entity.person.Costumer</class>
     <class>entity.stage.State</class>
+    <class>entity.person.Customer</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/dev"/>
       <property name="javax.persistence.jdbc.user" value="app"/>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
       <property name="javax.persistence.jdbc.password" value="app"/>
-      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>
   </persistence-unit>
 </persistence>

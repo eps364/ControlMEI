@@ -59,7 +59,7 @@ public class Sale implements Serializable, InterValueId {
 
     @JoinColumn(name = "productPersonId", referencedColumnName = "personId")
     @ManyToOne(optional = false)
-    private Person costumer;
+    private Person customer;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sale")
     private Collection<SaleItem> items;
@@ -113,11 +113,11 @@ public class Sale implements Serializable, InterValueId {
     }
 
     public Person getCustomer() {
-        return costumer;
+        return customer;
     }
 
     public void setCostumer(Person costumer) {
-        this.costumer = costumer;
+        this.customer = costumer;
     }
 
     @Override
