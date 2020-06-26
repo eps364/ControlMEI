@@ -9,45 +9,47 @@ import javax.persistence.NamedQuery;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name = "PersonCustomer")
+@Table(name = "Customer")
 @NamedQueries({
-    @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c")
-    , @NamedQuery(name = "Customer.findByPessoaId", query = "SELECT c FROM Customer c WHERE c.personId = :personId")
-    , @NamedQuery(name = "Customer.findByCpfNumber", query = "SELECT c FROM Customer c WHERE c.socialNumber = :socialNumber")
-    , @NamedQuery(name = "Customer.findByEstadoCivil", query = "SELECT c FROM Customer c WHERE c.maritalStatus = :maritalStatus")
-    , @NamedQuery(name = "Customer.findByLocalTrabalho", query = "SELECT c FROM Customer c WHERE c.workplace = :workplace")
-    , @NamedQuery(name = "Customer.findByProfissao", query = "SELECT c FROM Customer c WHERE c.professionName = :professionName")
-    , @NamedQuery(name = "Customer.findByRg", query = "SELECT c FROM Customer c WHERE c.rg = :rg")
-    , @NamedQuery(name = "Customer.findBySalario", query = "SELECT c FROM Customer c WHERE c.salary = :salary")
-    , @NamedQuery(name = "Customer.findBySexo", query = "SELECT c FROM Customer c WHERE c.sexOfPerson = :sexOfPerson")})
+    @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c"),
+    @NamedQuery(name = "Customer.findByPessoaId", query = "SELECT c FROM Customer c WHERE c.personId = :personId"),
+    @NamedQuery(name = "Customer.findByCpfNumber", query = "SELECT c FROM Customer c WHERE c.socialNumber = :socialNumber"),
+    @NamedQuery(name = "Customer.findByEstadoCivil", query = "SELECT c FROM Customer c WHERE c.maritalStatus = :maritalStatus"),
+    @NamedQuery(name = "Customer.findByNickname", query = "SELECT c FROM Customer c WHERE c.nickname = :nickname"),
+    @NamedQuery(name = "Customer.findByLocalTrabalho", query = "SELECT c FROM Customer c WHERE c.workplace = :workplace"),
+    @NamedQuery(name = "Customer.findByProfissao", query = "SELECT c FROM Customer c WHERE c.professionName = :professionName"),
+    @NamedQuery(name = "Customer.findByRg", query = "SELECT c FROM Customer c WHERE c.rg = :rg"),
+    @NamedQuery(name = "Customer.findBySalario", query = "SELECT c FROM Customer c WHERE c.salary = :salary"),
+    @NamedQuery(name = "Customer.findBySexo", query = "SELECT c FROM Customer c WHERE c.sexOfPerson = :sexOfPerson")})
 @DiscriminatorColumn(name = "Customer")
 @PrimaryKeyJoinColumn(referencedColumnName = "personId")
-
 public class Customer extends Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Column(name = "socialNumber")
     private String socialNumber;
-    
+
     @Column(name = "maritalStatus")
     private String maritalStatus;
-    
+
+    @Column(name = "nickname")
+    private String nickname;
+
     @Column(name = "workplace")
     private String workplace;
-    
+
     @Column(name = "professionName")
     private String professionName;
-    
+
     // Documment brazilian
     @Column(name = "rg")
     private String rg;
-    
+
     @Column(name = "salary")
     private Double salary;
-    
+
     @Column(name = "sexOfPerson")
     private String sexOfPerson;
 
@@ -64,6 +66,14 @@ public class Customer extends Person implements Serializable {
 
     public void setSocialNumber(String socialNumber) {
         this.socialNumber = socialNumber;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getMaritalStatus() {
@@ -113,5 +123,6 @@ public class Customer extends Person implements Serializable {
     public void setSexOfPerson(String sexOfPerson) {
         this.sexOfPerson = sexOfPerson;
     }
+
 
 }

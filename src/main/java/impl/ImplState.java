@@ -9,6 +9,7 @@ import javax.persistence.Query;
 public class ImplState extends factory.Generic<State> {
 
     private static State state;
+    private static final ImplState imp = new ImplState();
 
     public List<State> findAll() {
         EntityManager em = factory.Generic.Factory();
@@ -24,7 +25,7 @@ public class ImplState extends factory.Generic<State> {
     }
 
     public static void updateState() {
-        ImplState imp = new ImplState();
+
         state = new State();
         StringBuilder path = new StringBuilder();
         path.append("12, 'Acre', 'AC', 1 \n");
@@ -56,21 +57,29 @@ public class ImplState extends factory.Generic<State> {
         path.append("17, 'Tocantins', 'TO', 1 ");
 
         String[] split = path.toString().split("\n");
+        int SIZE = imp.findAll().size();
+        /*
+         Checks if the amount of data is less than 27.
+         If not, new data will be inserted.
+         */
+        if (SIZE < 27) {
+            for (String v : split) {
+                System.out.println("State insert...");
+                String[] set = v.split(",");
 
-        for (String v : split) {
-            String[] set = v.split(",");
-            
-            state.setStateCode(null);
-            state.setStateName(set[1].trim().replace("'", ""));
-            state.setStateInitials(set[2].trim().replace("'", ""));
-            state.setRegionCode(Integer.parseInt(set[3].trim()));
-            imp.save(state);
+                state.setStateCode(null);
+                state.setStateName(set[1].trim().replace("'", ""));
+                state.setStateInitials(set[2].trim().replace("'", ""));
+                state.setRegionCode(Integer.parseInt(set[3].trim()));
+                imp.save(state);
+            }
+
         }
 
-        if (imp.findAll().size() <= 27) {
-            updateState(); // 
+        if (SIZE < 27) {   // Checks if the amount of data is less than 27.
+            updateState(); // Otherwise, call the UpdateState method
         }
-
+        System.out.println("Concluded!");
     }
 
 }

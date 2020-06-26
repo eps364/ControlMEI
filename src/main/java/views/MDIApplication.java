@@ -13,8 +13,6 @@ import views.dialog.config.Config;
 public class MDIApplication extends javax.swing.JFrame {
 
     public MDIApplication() {
-//        factory.Generic.Factory();
-
         initComponents();
 //        Configuration.Config();
     }
@@ -93,6 +91,8 @@ public class MDIApplication extends javax.swing.JFrame {
         setTitle("Linecode:: ControlMEI");
         setIconImage(new ImageIcon(getClass().getResource("/img/icon.png")).getImage());
 
+        impl.ImplState.updateState();
+
         fileMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cadastrar.png"))); // NOI18N
         fileMenu.setMnemonic('f');
         fileMenu.setText("Cadastro de...");
@@ -102,7 +102,7 @@ public class MDIApplication extends javax.swing.JFrame {
         jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/prod-collect.png"))); // NOI18N
         jMenu2.setText("Produto");
 
-        itemCategoria.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_MASK));
+        itemCategoria.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/categoria.png"))); // NOI18N
         itemCategoria.setText("Categoria");
         itemCategoria.addActionListener(new java.awt.event.ActionListener() {
@@ -113,7 +113,7 @@ public class MDIApplication extends javax.swing.JFrame {
         jMenu2.add(itemCategoria);
         jMenu2.add(jSeparator5);
 
-        itemMarca.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_MASK));
+        itemMarca.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemMarca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icon-marca.png"))); // NOI18N
         itemMarca.setText("Marca");
         itemMarca.addActionListener(new java.awt.event.ActionListener() {
@@ -124,7 +124,7 @@ public class MDIApplication extends javax.swing.JFrame {
         jMenu2.add(itemMarca);
         jMenu2.add(jSeparator6);
 
-        itemMedida.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        itemMedida.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemMedida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/medida.png"))); // NOI18N
         itemMedida.setText("Medida");
         itemMedida.addActionListener(new java.awt.event.ActionListener() {
@@ -135,7 +135,7 @@ public class MDIApplication extends javax.swing.JFrame {
         jMenu2.add(itemMedida);
         jMenu2.add(jSeparator8);
 
-        itemProduto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        itemProduto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/produto.png"))); // NOI18N
         itemProduto.setMnemonic('s');
         itemProduto.setText("Produto");
@@ -147,7 +147,7 @@ public class MDIApplication extends javax.swing.JFrame {
         jMenu2.add(itemProduto);
         jMenu2.add(jSeparator9);
 
-        itemSecao.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        itemSecao.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemSecao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/secao.png"))); // NOI18N
         itemSecao.setText("Seção");
         itemSecao.addActionListener(new java.awt.event.ActionListener() {
@@ -165,7 +165,7 @@ public class MDIApplication extends javax.swing.JFrame {
         jMenu1.setText("Pessoa");
         jMenu1.add(jSeparator12);
 
-        itemCPF.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_MASK));
+        itemCPF.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemCPF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cpf.png"))); // NOI18N
         itemCPF.setText("Física");
         itemCPF.addActionListener(new java.awt.event.ActionListener() {
@@ -176,7 +176,7 @@ public class MDIApplication extends javax.swing.JFrame {
         jMenu1.add(itemCPF);
         jMenu1.add(jSeparator11);
 
-        itemCNPJ.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_J, java.awt.event.InputEvent.CTRL_MASK));
+        itemCNPJ.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_J, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemCNPJ.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cnpj.png"))); // NOI18N
         itemCNPJ.setMnemonic('o');
         itemCNPJ.setText("Jurídica");
@@ -188,17 +188,22 @@ public class MDIApplication extends javax.swing.JFrame {
         jMenu1.add(itemCNPJ);
         jMenu1.add(jSeparator13);
 
-        itemFuncionario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        itemFuncionario.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemFuncionario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/employer.png"))); // NOI18N
         itemFuncionario.setMnemonic('a');
         itemFuncionario.setText("Funcionário");
+        itemFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemFuncionarioActionPerformed(evt);
+            }
+        });
         jMenu1.add(itemFuncionario);
         jMenu1.add(jSeparator14);
 
         fileMenu.add(jMenu1);
         fileMenu.add(jSeparator3);
 
-        itemExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
+        itemExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/power.png"))); // NOI18N
         itemExit.setMnemonic('x');
         itemExit.setText("Sair");
@@ -216,13 +221,13 @@ public class MDIApplication extends javax.swing.JFrame {
         editMenu.setMnemonic('e');
         editMenu.setText("Relatórios");
 
-        itemEntradaMercadoria.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_MASK));
+        itemEntradaMercadoria.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
         itemEntradaMercadoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/rigth.png"))); // NOI18N
         itemEntradaMercadoria.setMnemonic('t');
         itemEntradaMercadoria.setText("Entrada de Mercadoria");
         editMenu.add(itemEntradaMercadoria);
 
-        itemSaidaMercadoria.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK));
+        itemSaidaMercadoria.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
         itemSaidaMercadoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/left.png"))); // NOI18N
         itemSaidaMercadoria.setMnemonic('y');
         itemSaidaMercadoria.setText("Saída de Mercadoria");
@@ -233,13 +238,13 @@ public class MDIApplication extends javax.swing.JFrame {
         });
         editMenu.add(itemSaidaMercadoria);
 
-        itemDespesa.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.SHIFT_MASK));
+        itemDespesa.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.SHIFT_DOWN_MASK));
         itemDespesa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/despesa.png"))); // NOI18N
         itemDespesa.setMnemonic('p');
         itemDespesa.setText("Despesas");
         editMenu.add(itemDespesa);
 
-        itemServico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        itemServico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemServico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/services.png"))); // NOI18N
         itemServico.setMnemonic('d');
         itemServico.setText("Serviços");
@@ -251,7 +256,7 @@ public class MDIApplication extends javax.swing.JFrame {
         helpMenu.setMnemonic('h');
         helpMenu.setText("Sobre...");
 
-        itemSistema.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        itemSistema.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemSistema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/config.png"))); // NOI18N
         itemSistema.setMnemonic('c');
         itemSistema.setText("Sistema");
@@ -262,7 +267,7 @@ public class MDIApplication extends javax.swing.JFrame {
         });
         helpMenu.add(itemSistema);
 
-        itemAjuda.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        itemAjuda.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.SHIFT_DOWN_MASK | java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemAjuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/help-item.png"))); // NOI18N
         itemAjuda.setMnemonic('a');
         itemAjuda.setText("Ajuda");
@@ -342,6 +347,10 @@ public class MDIApplication extends javax.swing.JFrame {
     private void itemCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCompraActionPerformed
         this.updateScreen(new InternalSale());
     }//GEN-LAST:event_itemCompraActionPerformed
+
+    private void itemFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemFuncionarioActionPerformed
+       this.updateScreen(new InternalEmployee());
+    }//GEN-LAST:event_itemFuncionarioActionPerformed
 
     public static void main(String args[]) {
 

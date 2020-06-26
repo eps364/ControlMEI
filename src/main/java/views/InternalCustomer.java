@@ -1,6 +1,7 @@
 package views;
 
 import entity.person.Customer;
+import enu.TypePerson;
 import impl.ImplCustomer;
 import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
@@ -32,10 +33,10 @@ public class InternalCustomer extends javax.swing.JInternalFrame {
         crud.findAll().forEach(c -> {
             model.addRow(new Object[]{
                 c.getId(),
-                c.getCompanyName(),
+                c.getPersonName(),
                 c.getSocialNumber(),
                 new ConvertDate(c.getNascimento()),
-                c.getFantasyName(),
+                c.getNickname(),
                 c.getPhone(),
                 c.getCellPhone(),
                 c.getWhatsapp(),
@@ -52,8 +53,13 @@ public class InternalCustomer extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         menuEditDelete = new javax.swing.JPopupMenu();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         itemEditar = new javax.swing.JMenuItem();
+        jSeparator2 = new javax.swing.JPopupMenu.Separator();
         itemDelete = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        itemFuncionario = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
         jPanel1 = new javax.swing.JPanel();
         jpnFields = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -65,6 +71,9 @@ public class InternalCustomer extends javax.swing.JInternalFrame {
         cmdDelete = new javax.swing.JButton();
         cmdSair = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        cmdUsuario = new javax.swing.JButton();
+
+        menuEditDelete.add(jSeparator1);
 
         itemEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/client_edit.png"))); // NOI18N
         itemEditar.setText("Editar linha");
@@ -74,6 +83,7 @@ public class InternalCustomer extends javax.swing.JInternalFrame {
             }
         });
         menuEditDelete.add(itemEditar);
+        menuEditDelete.add(jSeparator2);
 
         itemDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/client_del.png"))); // NOI18N
         itemDelete.setText("Deletar linha");
@@ -83,6 +93,16 @@ public class InternalCustomer extends javax.swing.JInternalFrame {
             }
         });
         menuEditDelete.add(itemDelete);
+        menuEditDelete.add(jSeparator3);
+
+        itemFuncionario.setText("Adicionar como Funcionário");
+        itemFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemFuncionarioActionPerformed(evt);
+            }
+        });
+        menuEditDelete.add(itemFuncionario);
+        menuEditDelete.add(jSeparator4);
 
         setClosable(true);
         setIconifiable(true);
@@ -172,6 +192,14 @@ public class InternalCustomer extends javax.swing.JInternalFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lupa.png"))); // NOI18N
 
+        cmdUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/client_del.png"))); // NOI18N
+        cmdUsuario.setText("Adicionar como Funcionário");
+        cmdUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdUsuarioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpnFieldsLayout = new javax.swing.GroupLayout(jpnFields);
         jpnFields.setLayout(jpnFieldsLayout);
         jpnFieldsLayout.setHorizontalGroup(
@@ -186,6 +214,8 @@ public class InternalCustomer extends javax.swing.JInternalFrame {
                         .addComponent(cmdEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmdDelete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmdUsuario)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(cmdSair))
                     .addGroup(jpnFieldsLayout.createSequentialGroup()
@@ -211,13 +241,14 @@ public class InternalCustomer extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmdSair)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnFieldsLayout.createSequentialGroup()
                         .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cmdNovo)
                             .addComponent(cmdEditar)
-                            .addComponent(cmdDelete))
-                        .addContainerGap())))
+                            .addComponent(cmdDelete)
+                            .addComponent(cmdUsuario))
+                        .addContainerGap())
+                    .addComponent(cmdSair)))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -326,21 +357,32 @@ public class InternalCustomer extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_masterTableKeyPressed
 
-    private void modifRowTable(int row) {
-        if (masterTable.getSelectedRow() != -1) {
-            masterTable.setRowSelectionInterval(row, row);
+    private void cmdUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdUsuarioActionPerformed
+        itemFuncionarioActionPerformed(evt);
+    }//GEN-LAST:event_cmdUsuarioActionPerformed
 
+    private void itemFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemFuncionarioActionPerformed
+      
+    }//GEN-LAST:event_itemFuncionarioActionPerformed
+
+    private void modifRowTable(int row) {
+        try {
+            if (masterTable.getSelectedRow() != -1) {
+                masterTable.setRowSelectionInterval(row, row);
+            }
+        } catch (Exception e) {
+            System.out.println("Selected row error: ".concat(e.getMessage()));
         }
     }
 
     private void editButton() {
-
-        if (masterTable.getSelectedRow() != -1) {
+            if (masterTable.getSelectedRow() != -1) {
             int old = crud.findAll().size();
             int row = masterTable.getSelectedRow();
             value = (int) masterTable.getValueAt(row, 0);
             cpf = crud.find(Customer.class, value);
             DialogCustomer dialog = new DialogCustomer(new JFrame(), true, cpf);
+
             dialog.setTitle(this.getTitle());
             dialog.setVisible(true);
             this.modifRowTable(row);
@@ -360,12 +402,18 @@ public class InternalCustomer extends javax.swing.JInternalFrame {
     private javax.swing.JButton cmdEditar;
     private javax.swing.JButton cmdNovo;
     private javax.swing.JButton cmdSair;
+    private javax.swing.JButton cmdUsuario;
     private javax.swing.JMenuItem itemDelete;
     private javax.swing.JMenuItem itemEditar;
+    private javax.swing.JMenuItem itemFuncionario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPanel jpnFields;
     private javax.swing.JTable masterTable;
     private javax.swing.JPopupMenu menuEditDelete;

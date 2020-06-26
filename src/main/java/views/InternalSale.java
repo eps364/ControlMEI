@@ -3,6 +3,7 @@ package views;
 import entity.person.Person;
 import entity.SaleItem;
 import entity.product.Stock;
+import enu.TypePerson;
 import impl.ImplProduct;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -10,10 +11,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import util.ControlPanel;
 import util.FormatNumber;
-import views.dialog.CustomerList;
+import views.dialog.PersonList;
 import views.dialog.ProductList;
 
 public class InternalSale extends javax.swing.JInternalFrame {
@@ -431,7 +432,7 @@ public class InternalSale extends javax.swing.JInternalFrame {
 
     private void cmdConcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdConcluirActionPerformed
 
-        Set<SaleItem> items = new HashSet<>();
+        Set<SaleItem> set = new HashSet<>();
         SaleItem item = new SaleItem();
 
 
@@ -450,18 +451,20 @@ public class InternalSale extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cmdRemoverActionPerformed
 
     private void cmdBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdBuscar1ActionPerformed
-        CustomerList client = new CustomerList(new javax.swing.JFrame(), true);
-        client.setVisible(true);
-        clientSelected(client.getCliente());
+        ControlPanel.DTYPE = TypePerson.CUSTOMER;
+        PersonList personList = new PersonList(new javax.swing.JFrame(), true);
+       
+        personList.setVisible(true);
+        clientSelected(personList.getCliente());
 
     }//GEN-LAST:event_cmdBuscar1ActionPerformed
 
     private void clientSelected(Person person){
         
         try {
-             fieldClient.setText(person.getCompanyName());
+             fieldClient.setText(person.getPersonName());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Not found costumer!");
+            System.out.println("Not found costumer!");
         }
     }
     

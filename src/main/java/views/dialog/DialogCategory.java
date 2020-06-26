@@ -69,6 +69,8 @@ public class DialogCategory extends javax.swing.JDialog {
         } catch (HeadlessException | IllegalArgumentException e) {
 
             JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        } finally {
+            this.setEnableField(ControlPanel.controlDialogButton(ButtonEnum.SAVE_BUTTON, cmdDelete, cmdNew, cmdSave));
         }
     }
 
@@ -138,6 +140,9 @@ public class DialogCategory extends javax.swing.JDialog {
             }
         });
         masterTable.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                masterTableKeyPressed(evt);
+            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 masterTableKeyReleased(evt);
             }
@@ -391,6 +396,12 @@ public class DialogCategory extends javax.swing.JDialog {
             cmdSave.requestFocus();
         }
     }//GEN-LAST:event_fieldCategoriaKeyPressed
+
+    private void masterTableKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_masterTableKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            cmdSave.requestFocus();
+        }
+    }//GEN-LAST:event_masterTableKeyPressed
 
     private void setEnableField(boolean is) {
 

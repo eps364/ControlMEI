@@ -2,6 +2,7 @@ package util;
 
 import com.toedter.calendar.JDateChooser;
 import enu.ButtonEnum;
+import enu.TypePerson;
 import java.awt.Component;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 
 public class ControlPanel {
 
+    public static TypePerson DTYPE;
     private static boolean newButton, saveButton, deleteButton;
 
     /**

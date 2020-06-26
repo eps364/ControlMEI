@@ -13,11 +13,11 @@ import javax.persistence.Table;
 @Table(name = "company")
 
 @NamedQueries({
-    @NamedQuery(name = "Company.findAll", query = "SELECT c FROM Company c")
-    , @NamedQuery(name = "Company.findByPessoaId", query = "SELECT c FROM Company c WHERE c.personId = :personId")
-    , @NamedQuery(name = "Company.findByCnpjNumber", query = "SELECT c FROM Company c WHERE c.companyNumber = :companyNumber")
-    , @NamedQuery(name = "Company.findByInscEstadual", query = "SELECT c FROM Company c WHERE c.stateRegister = :stateRegister")
-    , @NamedQuery(name = "Company.findByInscMunicipal", query = "SELECT c FROM Company c WHERE c.inscMunicipal = :inscMunicipal")})
+    @NamedQuery(name = "Company.findAll", query = "SELECT c FROM Company c"),
+    @NamedQuery(name = "Company.findByPessoaId", query = "SELECT c FROM Company c WHERE c.personId = :personId"),
+    @NamedQuery(name = "Company.findByCnpjNumber", query = "SELECT c FROM Company c WHERE c.companyNumber = :companyNumber"),
+    @NamedQuery(name = "Company.findByFantasyName", query = "SELECT c FROM Company c WHERE c.fantasyName = :fantasyName"),
+    @NamedQuery(name = "Company.findByInscEstadual", query = "SELECT c FROM Company c WHERE c.stateRegister = :stateRegister")})
 @DiscriminatorColumn(name = "Company")
 @PrimaryKeyJoinColumn(referencedColumnName = "personId")
 public class Company extends Person implements Serializable, interf.InterValueId {
@@ -25,13 +25,13 @@ public class Company extends Person implements Serializable, interf.InterValueId
     private static final long serialVersionUID = 1L;
     @Column(name = "companyNumber")
     private String companyNumber;
-    
+
     @Column(name = "stateRegister")
     private String stateRegister;
-    
-    @Column(name = "insc_municipal")
-    private String inscMunicipal;
-   
+
+    @Column(name = "fantasyName")
+    private String fantasyName;
+
     public Company() {
     }
 
@@ -47,22 +47,20 @@ public class Company extends Person implements Serializable, interf.InterValueId
         this.companyNumber = cnpjNumber;
     }
 
-    public String getInscEstadual() {
+    public String getFantasyName() {
+        return fantasyName;
+    }
+
+    public void setFantasyName(String fantasyName) {
+        this.fantasyName = fantasyName;
+    }
+
+    public String getStateRegister() {
         return stateRegister;
     }
 
-    public void setInscEstadual(String inscEstadual) {
+    public void setStateRegister(String inscEstadual) {
         this.stateRegister = inscEstadual;
     }
-
-    public String getInscMunicipal() {
-        return inscMunicipal;
-    }
-
-    public void setInscMunicipal(String inscMunicipal) {
-        this.inscMunicipal = inscMunicipal;
-    }
-
-
 
 }

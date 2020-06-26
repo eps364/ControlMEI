@@ -4,6 +4,7 @@ import entity.person.Customer;
 import entity.stage.State;
 
 import enu.FieldChar;
+import enu.TypePerson;
 
 import impl.ImplState;
 
@@ -91,13 +92,14 @@ public class DialogCustomer extends javax.swing.JDialog {
 
             fieldCode.setText(String.valueOf(cpf.getId()));
 
-            fieldRazaoSocial.setText(cpf.getCompanyName());
+            fieldRazaoSocial.setText(cpf.getPersonName());
 
             fieldCPF.setText(cpf.getSocialNumber());
+            cbxSexName.setSelectedItem(cpf.getSexOfPerson());
 
             fieldRg.setText(cpf.getRg());
 
-            fieldNomeApelido.setText(cpf.getFantasyName());
+            fieldNomeApelido.setText(cpf.getNickname());
 
             chooserNasc.setDate(cpf.getNascimento());
 
@@ -140,6 +142,7 @@ public class DialogCustomer extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        dadosPerson = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         cmdDispose = new javax.swing.JButton();
         cmdSave = new javax.swing.JButton();
@@ -186,7 +189,54 @@ public class DialogCustomer extends javax.swing.JDialog {
         fieldLocalTrabalho = new javax.swing.JTextField();
         fieldSalario = new javax.swing.JFormattedTextField();
         jLabel22 = new javax.swing.JLabel();
+        cbxSexName = new javax.swing.JComboBox<>();
+        jLabel23 = new javax.swing.JLabel();
         cmdCancel = new javax.swing.JButton();
+        jnpFields1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jpnFields1 = new javax.swing.JPanel();
+        fieldRazaoSocial1 = new javax.swing.JTextField();
+        fieldCredito1 = new javax.swing.JFormattedTextField();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        fieldRg1 = new javax.swing.JTextField();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        chooserNasc1 = new com.toedter.calendar.JDateChooser();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        fieldEmail1 = new javax.swing.JTextField();
+        fieldCode1 = new javax.swing.JTextField();
+        jLabel34 = new javax.swing.JLabel();
+        fieldFone1 = new javax.swing.JFormattedTextField();
+        fieldCPF1 = new javax.swing.JFormattedTextField();
+        fieldCelular1 = new javax.swing.JFormattedTextField();
+        fieldWhatsapp1 = new javax.swing.JFormattedTextField();
+        jLabel35 = new javax.swing.JLabel();
+        fieldRua1 = new javax.swing.JTextField();
+        jLabel36 = new javax.swing.JLabel();
+        fieldReferencia1 = new javax.swing.JTextField();
+        jLabel37 = new javax.swing.JLabel();
+        fieldBairro1 = new javax.swing.JTextField();
+        jLabel38 = new javax.swing.JLabel();
+        fieldCidade1 = new javax.swing.JTextField();
+        jLabel39 = new javax.swing.JLabel();
+        fieldCep1 = new javax.swing.JFormattedTextField();
+        jLabel40 = new javax.swing.JLabel();
+        cbxUf1 = new javax.swing.JComboBox<entity.stage.State>();
+        fieldNomeApelido1 = new javax.swing.JTextField();
+        jLabel41 = new javax.swing.JLabel();
+        fieldProfissao1 = new javax.swing.JTextField();
+        jLabel42 = new javax.swing.JLabel();
+        fieldLocalTrabalho1 = new javax.swing.JTextField();
+        fieldSalario1 = new javax.swing.JFormattedTextField();
+        jLabel43 = new javax.swing.JLabel();
+        cbxSexName1 = new javax.swing.JComboBox<>();
+        jLabel44 = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
@@ -418,6 +468,15 @@ public class DialogCustomer extends javax.swing.JDialog {
 
         jLabel22.setText("Salário:");
 
+        cbxSexName.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Feminino" }));
+        cbxSexName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbxSexNameKeyPressed(evt);
+            }
+        });
+
+        jLabel23.setText("Sexo:");
+
         javax.swing.GroupLayout jpnFieldsLayout = new javax.swing.GroupLayout(jpnFields);
         jpnFields.setLayout(jpnFieldsLayout);
         jpnFieldsLayout.setHorizontalGroup(
@@ -427,22 +486,6 @@ public class DialogCustomer extends javax.swing.JDialog {
                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpnFieldsLayout.createSequentialGroup()
                         .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jpnFieldsLayout.createSequentialGroup()
-                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(fieldRazaoSocial, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jpnFieldsLayout.createSequentialGroup()
-                                        .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jpnFieldsLayout.createSequentialGroup()
-                                                .addComponent(fieldCode, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(ckbSituacao))
-                                            .addComponent(jLabel3))
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4)))
                             .addGroup(jpnFieldsLayout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -475,7 +518,11 @@ public class DialogCustomer extends javax.swing.JDialog {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel5)
-                                            .addComponent(fieldCredito, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                            .addComponent(fieldCredito, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpnFieldsLayout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(484, 484, 484)
+                                .addComponent(jLabel23)))
                         .addGap(1, 1, 1))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnFieldsLayout.createSequentialGroup()
                         .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -492,31 +539,45 @@ public class DialogCustomer extends javax.swing.JDialog {
                             .addComponent(fieldBairro, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jpnFieldsLayout.createSequentialGroup()
-                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(fieldCidade, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                                    .addComponent(jLabel21))
-                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jpnFieldsLayout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(fieldCep, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                                            .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(cbxUf, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(jpnFieldsLayout.createSequentialGroup()
-                                        .addGap(66, 66, 66)
-                                        .addComponent(jLabel22))))
-                            .addGroup(jpnFieldsLayout.createSequentialGroup()
-                                .addComponent(fieldLocalTrabalho, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(fieldSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(fieldLocalTrabalho)
+                                .addComponent(fieldCidade, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                                .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
+                            .addComponent(jLabel21))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(fieldSalario, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jpnFieldsLayout.createSequentialGroup()
+                                    .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(fieldCep, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                                        .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(cbxUf, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(jpnFieldsLayout.createSequentialGroup()
                         .addComponent(jLabel20)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnFieldsLayout.createSequentialGroup()
+                        .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jpnFieldsLayout.createSequentialGroup()
+                                .addComponent(fieldCode, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(ckbSituacao)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jpnFieldsLayout.createSequentialGroup()
+                                .addComponent(fieldRazaoSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jpnFieldsLayout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(fieldCPF))))
+                        .addGap(6, 6, 6)
+                        .addComponent(cbxSexName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jpnFieldsLayout.setVerticalGroup(
@@ -531,11 +592,13 @@ public class DialogCustomer extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel23))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fieldRazaoSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(fieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxSexName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
@@ -643,23 +706,420 @@ public class DialogCustomer extends javax.swing.JDialog {
                     .addComponent(cmdSave)
                     .addComponent(cmdDispose)
                     .addComponent(cmdCancel))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        dadosPerson.addTab("DADOS PESSOAIS", jPanel1);
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jpnFields1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        fieldRazaoSocial1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fieldRazaoSocial1KeyPressed(evt);
+            }
+        });
+
+        fieldCredito1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        fieldCredito1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fieldCredito1KeyPressed(evt);
+            }
+        });
+
+        jLabel24.setText("Código de usuário:");
+
+        jLabel25.setText("PIS:");
+
+        jLabel26.setText("Contratação:");
+
+        jLabel27.setText("Crédito:");
+
+        fieldRg1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fieldRg1KeyPressed(evt);
+            }
+        });
+
+        jLabel28.setText("Carga Horária:");
+
+        jLabel29.setText("Email:");
+
+        chooserNasc1.setDateFormatString("dd/MM/yyyy");
+
+        jLabel30.setText("Data Admissão:");
+
+        jLabel31.setText("CNH:");
+
+        jLabel32.setText("Casteira de Trabalho:");
+
+        jLabel33.setText("Celular:");
+
+        fieldEmail1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fieldEmail1KeyPressed(evt);
+            }
+        });
+
+        fieldCode1.setEditable(false);
+        fieldCode1.setBackground(new java.awt.Color(255, 255, 255));
+        fieldCode1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        fieldCode1.setFocusable(false);
+
+        jLabel34.setText("Whatsapp:");
+
+        fieldFone1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
+        fieldFone1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fieldFone1KeyPressed(evt);
+            }
+        });
+
+        try {
+            fieldCPF1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        fieldCPF1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fieldCPF1KeyPressed(evt);
+            }
+        });
+
+        try {
+            fieldCelular1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        fieldCelular1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fieldCelular1KeyPressed(evt);
+            }
+        });
+
+        try {
+            fieldWhatsapp1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        fieldWhatsapp1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fieldWhatsapp1KeyPressed(evt);
+            }
+        });
+
+        jLabel35.setText("Nacionalidade:");
+
+        fieldRua1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fieldRua1KeyPressed(evt);
+            }
+        });
+
+        jLabel36.setText("Naturalidade:");
+
+        fieldReferencia1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fieldReferencia1KeyPressed(evt);
+            }
+        });
+
+        jLabel37.setText("Bairro:");
+
+        fieldBairro1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fieldBairro1KeyPressed(evt);
+            }
+        });
+
+        jLabel38.setText("Cidade:");
+
+        fieldCidade1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fieldCidade1KeyPressed(evt);
+            }
+        });
+
+        jLabel39.setText("CEP:");
+
+        try {
+            fieldCep1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        fieldCep1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fieldCep1KeyPressed(evt);
+            }
+        });
+
+        jLabel40.setText("UF:");
+
+        cbxUf1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbxUf1KeyPressed(evt);
+            }
+        });
+
+        fieldNomeApelido1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fieldNomeApelido1KeyPressed(evt);
+            }
+        });
+
+        jLabel41.setText("Profissão:");
+
+        fieldProfissao1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fieldProfissao1KeyPressed(evt);
+            }
+        });
+
+        jLabel42.setText("Local de trabalho:");
+
+        fieldLocalTrabalho1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fieldLocalTrabalho1KeyPressed(evt);
+            }
+        });
+
+        fieldSalario1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        fieldSalario1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                fieldSalario1KeyPressed(evt);
+            }
+        });
+
+        jLabel43.setText("Salário:");
+
+        cbxSexName1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Casado", "Solteiro", "Diverciado" }));
+        cbxSexName1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbxSexName1KeyPressed(evt);
+            }
+        });
+
+        jLabel44.setText("Estado Civil:");
+
+        javax.swing.GroupLayout jpnFields1Layout = new javax.swing.GroupLayout(jpnFields1);
+        jpnFields1.setLayout(jpnFields1Layout);
+        jpnFields1Layout.setHorizontalGroup(
+            jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnFields1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnFields1Layout.createSequentialGroup()
+                        .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(fieldRua1)
+                            .addGroup(jpnFields1Layout.createSequentialGroup()
+                                .addComponent(jLabel35)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jpnFields1Layout.createSequentialGroup()
+                                .addComponent(jLabel36)
+                                .addGap(255, 255, 255))
+                            .addComponent(fieldReferencia1)))
+                    .addGroup(jpnFields1Layout.createSequentialGroup()
+                        .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel32)
+                            .addComponent(jLabel41)
+                            .addComponent(fieldCode1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel24))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnFields1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnFields1Layout.createSequentialGroup()
+                                .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(chooserNasc1, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                                    .addComponent(jLabel30, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(fieldFone1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel28))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jpnFields1Layout.createSequentialGroup()
+                                        .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(fieldCelular1)
+                                            .addComponent(jLabel33, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(fieldWhatsapp1)
+                                            .addComponent(jLabel34, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel29)
+                                            .addComponent(fieldEmail1)))
+                                    .addGroup(jpnFields1Layout.createSequentialGroup()
+                                        .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(fieldRg1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel25))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(fieldNomeApelido1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel26))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel27)
+                                            .addComponent(fieldCredito1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnFields1Layout.createSequentialGroup()
+                                .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(fieldProfissao1)
+                                    .addComponent(jLabel37, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fieldBairro1, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(fieldLocalTrabalho1)
+                                        .addComponent(fieldCidade1)
+                                        .addComponent(jLabel38, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE))
+                                    .addComponent(jLabel42))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jpnFields1Layout.createSequentialGroup()
+                                        .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(fieldCep1, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                                            .addComponent(jLabel39, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jLabel40, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(cbxUf1, 0, 80, Short.MAX_VALUE)))
+                                    .addComponent(fieldSalario1)))))
+                    .addGroup(jpnFields1Layout.createSequentialGroup()
+                        .addComponent(fieldRazaoSocial1, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(fieldCPF1, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel31))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpnFields1Layout.createSequentialGroup()
+                                .addComponent(jLabel44)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(cbxSexName1, 0, 112, Short.MAX_VALUE))))
+                .addContainerGap())
+        );
+        jpnFields1Layout.setVerticalGroup(
+            jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnFields1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fieldCode1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel32)
+                    .addComponent(jLabel31)
+                    .addComponent(jLabel44))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fieldRazaoSocial1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldCPF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxSexName1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel30)
+                    .addComponent(jLabel25)
+                    .addComponent(jLabel26)
+                    .addComponent(jLabel27))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(chooserNasc1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(fieldRg1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(fieldCredito1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(fieldNomeApelido1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel28)
+                    .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel33)
+                        .addComponent(jLabel34)
+                        .addComponent(jLabel29)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fieldFone1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldCelular1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldWhatsapp1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldEmail1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel35)
+                    .addComponent(jLabel36))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fieldRua1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldReferencia1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel37)
+                    .addComponent(jLabel38)
+                    .addComponent(jLabel39)
+                    .addComponent(jLabel40))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fieldBairro1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldCidade1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldCep1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxUf1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel41)
+                    .addComponent(jLabel42)
+                    .addComponent(jLabel43))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpnFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fieldProfissao1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldLocalTrabalho1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldSalario1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jpnFields1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jpnFields1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(55, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jnpFields1Layout = new javax.swing.GroupLayout(jnpFields1);
+        jnpFields1.setLayout(jnpFields1Layout);
+        jnpFields1Layout.setHorizontalGroup(
+            jnpFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jnpFields1Layout.setVerticalGroup(
+            jnpFields1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        dadosPerson.addTab("DADOS DE FUNCIONÁRIO", jnpFields1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(dadosPerson, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(dadosPerson, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -681,7 +1141,7 @@ public class DialogCustomer extends javax.swing.JDialog {
 
             if (ControlPanel.emailValidate(fieldEmail.getText())) {
                 this.save();
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(rootPane, "Invalid email.\nCheck and try again.");
             }
 
@@ -718,7 +1178,7 @@ public class DialogCustomer extends javax.swing.JDialog {
 
         if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
 
-            chooserNasc.getDateEditor().getUiComponent().requestFocusInWindow();
+            cbxSexName.requestFocus();
 
         }
 
@@ -908,13 +1368,95 @@ public class DialogCustomer extends javax.swing.JDialog {
 
     }//GEN-LAST:event_fieldSalarioKeyPressed
 
+    private void cbxSexNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbxSexNameKeyPressed
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            chooserNasc.getDateEditor().getUiComponent().requestFocusInWindow();
+        }
+    }//GEN-LAST:event_cbxSexNameKeyPressed
+
+    private void fieldRazaoSocial1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldRazaoSocial1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldRazaoSocial1KeyPressed
+
+    private void fieldCredito1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldCredito1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldCredito1KeyPressed
+
+    private void fieldRg1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldRg1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldRg1KeyPressed
+
+    private void fieldCPF1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldCPF1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldCPF1KeyPressed
+
+    private void fieldRua1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldRua1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldRua1KeyPressed
+
+    private void fieldReferencia1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldReferencia1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldReferencia1KeyPressed
+
+    private void fieldBairro1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldBairro1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldBairro1KeyPressed
+
+    private void fieldCidade1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldCidade1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldCidade1KeyPressed
+
+    private void fieldCep1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldCep1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldCep1KeyPressed
+
+    private void cbxUf1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbxUf1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxUf1KeyPressed
+
+    private void fieldNomeApelido1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldNomeApelido1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldNomeApelido1KeyPressed
+
+    private void fieldProfissao1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldProfissao1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldProfissao1KeyPressed
+
+    private void fieldLocalTrabalho1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldLocalTrabalho1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldLocalTrabalho1KeyPressed
+
+    private void fieldSalario1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldSalario1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldSalario1KeyPressed
+
+    private void cbxSexName1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbxSexName1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxSexName1KeyPressed
+
+    private void fieldEmail1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldEmail1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldEmail1KeyPressed
+
+    private void fieldWhatsapp1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldWhatsapp1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldWhatsapp1KeyPressed
+
+    private void fieldCelular1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldCelular1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldCelular1KeyPressed
+
+    private void fieldFone1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldFone1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldFone1KeyPressed
+
     private void save() throws Exception {
 
-        cpf.setCompanyName(fieldRazaoSocial.getText().toUpperCase().trim());
-        if (cpf.getCompanyName().equals("")) {
+        cpf.setPersonName(fieldRazaoSocial.getText().toUpperCase().trim());
+        if (cpf.getPersonName().equals("")) {
             throw new IllegalArgumentException("O campo razão social não pode ser vazio.\nVerifique e tente novamente");
         }
-        cpf.setFantasyName(fieldNomeApelido.getText().toUpperCase());
+        cpf.setNickname(fieldNomeApelido.getText().toUpperCase());
         cpf.setDateBirth(chooserNasc.getDate());
         if (cpf.getNascimento() == null) {
             throw new IllegalArgumentException("O campo Nascimento não pode ser vazio.\nVerifique e tente novamente");
@@ -946,6 +1488,7 @@ public class DialogCustomer extends javax.swing.JDialog {
 
         cpf.setCityName(fieldCidade.getText().toUpperCase().trim());
 
+        cpf.setSexOfPerson(cbxSexName.getSelectedItem().toString());
         cpf.setState((State) cbxUf.getSelectedItem());
         cpf.setProfessionName(fieldProfissao.getText().toUpperCase().trim());
         cpf.setWorkplace(fieldLocalTrabalho.getText().toUpperCase().trim());
@@ -1020,31 +1563,54 @@ public class DialogCustomer extends javax.swing.JDialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cbxSexName;
+    private javax.swing.JComboBox<String> cbxSexName1;
     private javax.swing.JComboBox<entity.stage.State> cbxUf;
+    private javax.swing.JComboBox<entity.stage.State> cbxUf1;
     private com.toedter.calendar.JDateChooser chooserNasc;
+    private com.toedter.calendar.JDateChooser chooserNasc1;
     private javax.swing.JCheckBox ckbSituacao;
     private javax.swing.JButton cmdCancel;
     private javax.swing.JButton cmdDispose;
     private javax.swing.JButton cmdNew;
     private javax.swing.JButton cmdSave;
+    private javax.swing.JTabbedPane dadosPerson;
     private javax.swing.JTextField fieldBairro;
+    private javax.swing.JTextField fieldBairro1;
     private javax.swing.JFormattedTextField fieldCPF;
+    private javax.swing.JFormattedTextField fieldCPF1;
     private javax.swing.JFormattedTextField fieldCelular;
+    private javax.swing.JFormattedTextField fieldCelular1;
     private javax.swing.JFormattedTextField fieldCep;
+    private javax.swing.JFormattedTextField fieldCep1;
     private javax.swing.JTextField fieldCidade;
+    private javax.swing.JTextField fieldCidade1;
     private javax.swing.JTextField fieldCode;
+    private javax.swing.JTextField fieldCode1;
     private javax.swing.JFormattedTextField fieldCredito;
+    private javax.swing.JFormattedTextField fieldCredito1;
     private javax.swing.JTextField fieldEmail;
+    private javax.swing.JTextField fieldEmail1;
     private javax.swing.JFormattedTextField fieldFone;
+    private javax.swing.JFormattedTextField fieldFone1;
     private javax.swing.JTextField fieldLocalTrabalho;
+    private javax.swing.JTextField fieldLocalTrabalho1;
     private javax.swing.JTextField fieldNomeApelido;
+    private javax.swing.JTextField fieldNomeApelido1;
     private javax.swing.JTextField fieldProfissao;
+    private javax.swing.JTextField fieldProfissao1;
     private javax.swing.JTextField fieldRazaoSocial;
+    private javax.swing.JTextField fieldRazaoSocial1;
     private javax.swing.JTextField fieldReferencia;
+    private javax.swing.JTextField fieldReferencia1;
     private javax.swing.JTextField fieldRg;
+    private javax.swing.JTextField fieldRg1;
     private javax.swing.JTextField fieldRua;
+    private javax.swing.JTextField fieldRua1;
     private javax.swing.JFormattedTextField fieldSalario;
+    private javax.swing.JFormattedTextField fieldSalario1;
     private javax.swing.JFormattedTextField fieldWhatsapp;
+    private javax.swing.JFormattedTextField fieldWhatsapp1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1060,16 +1626,41 @@ public class DialogCustomer extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JPanel jnpFields1;
     private javax.swing.JPanel jpnFields;
+    private javax.swing.JPanel jpnFields1;
     // End of variables declaration//GEN-END:variables
 
     private void keyEventChooser() {

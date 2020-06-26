@@ -50,6 +50,9 @@ public class DialogCompany extends javax.swing.JDialog {
 
     private void formatNumber() {
         FormatNumber.formatFieldPoint(fieldCredito, FieldChar.vk_comma);
+        FormatNumber.formatFieldPoint(fieldCredito, FieldChar.vk_comma);
+        FormatNumber.formatFieldPoint(fieldCredito, FieldChar.vk_comma);
+
         this.keyEventChooser();
     }
 
@@ -60,12 +63,11 @@ public class DialogCompany extends javax.swing.JDialog {
             ckbSituacao.setSelected(company.getPersonStatus());
 
             fieldCode.setText(String.valueOf(company.getId()));
-            fieldNome.setText(company.getCompanyName());
+            fieldNome.setText(company.getPersonName());
             fieldNomeFantasia.setText(company.getFantasyName());
 
             fieldCNPJ.setText(company.getCnpjNumber());
-            fieldInscEstadual.setText(company.getInscEstadual());
-            fieldInscMunicipal.setText(company.getInscMunicipal());
+            fieldInscricao.setText(company.getStateRegister());
             chooserNasc.setDate(company.getNascimento());
             fieldCredito.setText(String.valueOf(company.getValueCredit()).replace(".", ","));
 
@@ -100,10 +102,8 @@ public class DialogCompany extends javax.swing.JDialog {
         fieldNome = new javax.swing.JTextField();
         fieldCredito = new javax.swing.JFormattedTextField();
         jLabel2 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        fieldInscMunicipal = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         chooserNasc = new com.toedter.calendar.JDateChooser();
@@ -131,7 +131,7 @@ public class DialogCompany extends javax.swing.JDialog {
         fieldCep = new javax.swing.JFormattedTextField();
         jLabel19 = new javax.swing.JLabel();
         cbxUf = new javax.swing.JComboBox<>();
-        fieldInscEstadual = new javax.swing.JFormattedTextField();
+        fieldInscricao = new javax.swing.JFormattedTextField();
         fieldNomeFantasia = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
         cmdCancel = new javax.swing.JButton();
@@ -194,17 +194,9 @@ public class DialogCompany extends javax.swing.JDialog {
 
         jLabel2.setText("Código:");
 
-        jLabel6.setText("Insc. Municipal:");
-
-        jLabel7.setText("Insc. Estadual:");
+        jLabel7.setText("Inscrição:");
 
         jLabel5.setText("Crédito:");
-
-        fieldInscMunicipal.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                fieldInscMunicipalKeyPressed(evt);
-            }
-        });
 
         jLabel9.setText("Fone:");
 
@@ -334,14 +326,11 @@ public class DialogCompany extends javax.swing.JDialog {
             }
         });
 
-        try {
-            fieldInscEstadual.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##-######-#")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        fieldInscEstadual.addKeyListener(new java.awt.event.KeyAdapter() {
+        fieldInscricao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        fieldInscricao.setText("");
+        fieldInscricao.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                fieldInscEstadualKeyPressed(evt);
+                fieldInscricaoKeyPressed(evt);
             }
         });
 
@@ -363,59 +352,56 @@ public class DialogCompany extends javax.swing.JDialog {
                     .addGroup(jpnFieldsLayout.createSequentialGroup()
                         .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jpnFieldsLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(chooserNasc, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
                                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(fieldFone, javax.swing.GroupLayout.Alignment.TRAILING))
+                                    .addComponent(fieldFone, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(fieldCelular)
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(fieldWhatsapp)
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(fieldEmail)
+                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpnFieldsLayout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpnFieldsLayout.createSequentialGroup()
                                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jpnFieldsLayout.createSequentialGroup()
-                                        .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(fieldCelular)
-                                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(fieldWhatsapp)
-                                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(fieldEmail)
-                                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(jpnFieldsLayout.createSequentialGroup()
-                                        .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(fieldInscMunicipal, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-                                            .addComponent(fieldInscEstadual))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel5)
-                                            .addComponent(fieldCredito, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                            .addGroup(jpnFieldsLayout.createSequentialGroup()
-                                .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jpnFieldsLayout.createSequentialGroup()
                                         .addComponent(fieldCode, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(ckbSituacao))
-                                    .addComponent(jLabel3))
+                                    .addComponent(fieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jpnFieldsLayout.createSequentialGroup()
-                                        .addComponent(jLabel20)
+                                        .addComponent(jLabel7)
                                         .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(fieldNomeFantasia))
+                                    .addGroup(jpnFieldsLayout.createSequentialGroup()
+                                        .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(fieldNomeFantasia)
+                                            .addGroup(jpnFieldsLayout.createSequentialGroup()
+                                                .addComponent(jLabel20)
+                                                .addGap(0, 0, Short.MAX_VALUE)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(fieldCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(jpnFieldsLayout.createSequentialGroup()
+                                .addComponent(chooserNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(fieldInscricao)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fieldCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpnFieldsLayout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                    .addComponent(jLabel5)
+                                    .addComponent(fieldCredito, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(1, 1, 1))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnFieldsLayout.createSequentialGroup()
                         .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -465,16 +451,14 @@ public class DialogCompany extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jLabel6)
                     .addComponent(jLabel7)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(chooserNasc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(fieldInscMunicipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(fieldCredito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(fieldInscEstadual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(fieldInscricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jpnFieldsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
@@ -508,16 +492,16 @@ public class DialogCompany extends javax.swing.JDialog {
                     .addComponent(fieldCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(fieldCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbxUf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
         jpnFieldsLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {ckbSituacao, fieldCode});
 
         jpnFieldsLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel3, jLabel4});
 
-        jpnFieldsLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel5, jLabel6, jLabel7, jLabel8});
+        jpnFieldsLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel5, jLabel7, jLabel8});
 
-        jpnFieldsLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {chooserNasc, fieldCredito, fieldInscMunicipal});
+        jpnFieldsLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {chooserNasc, fieldCredito});
 
         jpnFieldsLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel10, jLabel11, jLabel12, jLabel9});
 
@@ -553,13 +537,13 @@ public class DialogCompany extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jpnFields, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmdNew)
                     .addComponent(cmdSave)
                     .addComponent(cmdDispose)
                     .addComponent(cmdCancel))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -575,8 +559,7 @@ public class DialogCompany extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -640,7 +623,7 @@ public class DialogCompany extends javax.swing.JDialog {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyChar() == KeyEvent.VK_ENTER) {
-                    fieldInscMunicipal.requestFocus();
+                    fieldInscricao.requestFocus();
 
                 }
             }
@@ -653,12 +636,6 @@ public class DialogCompany extends javax.swing.JDialog {
 
     }
 
-
-    private void fieldInscMunicipalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldInscMunicipalKeyPressed
-        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
-            fieldInscEstadual.requestFocus();
-        }
-    }//GEN-LAST:event_fieldInscMunicipalKeyPressed
 
     private void fieldCreditoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldCreditoKeyPressed
         if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
@@ -734,11 +711,11 @@ public class DialogCompany extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_cmdSaveKeyPressed
 
-    private void fieldInscEstadualKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldInscEstadualKeyPressed
+    private void fieldInscricaoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fieldInscricaoKeyPressed
         if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
             fieldCredito.requestFocus();
         }
-    }//GEN-LAST:event_fieldInscEstadualKeyPressed
+    }//GEN-LAST:event_fieldInscricaoKeyPressed
 
     private void cmdCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCancelActionPerformed
         fields(companyCancel);
@@ -753,8 +730,8 @@ public class DialogCompany extends javax.swing.JDialog {
 
     private void save() throws Exception {
 
-        company.setCompanyName(fieldNome.getText().toUpperCase().trim());
-        if (company.getCompanyName().equals("")) {
+        company.setPersonName(fieldNome.getText().toUpperCase().trim());
+        if (company.getPersonName().equals("")) {
             throw new IllegalArgumentException("O campo razão social não pode ser vazio.\nVerifique e tente novamente");
         }
 
@@ -766,8 +743,7 @@ public class DialogCompany extends javax.swing.JDialog {
         company.setValueCredit(Double.parseDouble(0 + fieldCredito.getText().replace(",", ".")));
         company.setPersonStatus(ckbSituacao.isSelected());
         company.setCnpjNumber(fieldCNPJ.getText());
-        company.setInscEstadual(fieldInscEstadual.getText());
-        company.setInscMunicipal(fieldInscMunicipal.getText());
+        company.setStateRegister(fieldInscricao.getText());
         company.setPhone(fieldFone.getText());
         company.setCellPhone(fieldCelular.getText());
         company.setWhatsapp(fieldWhatsapp.getText());
@@ -862,8 +838,7 @@ public class DialogCompany extends javax.swing.JDialog {
     private javax.swing.JFormattedTextField fieldCredito;
     private javax.swing.JTextField fieldEmail;
     private javax.swing.JFormattedTextField fieldFone;
-    private javax.swing.JFormattedTextField fieldInscEstadual;
-    private javax.swing.JTextField fieldInscMunicipal;
+    private javax.swing.JFormattedTextField fieldInscricao;
     private javax.swing.JTextField fieldNome;
     private javax.swing.JTextField fieldNomeFantasia;
     private javax.swing.JTextField fieldReferencia;
@@ -885,7 +860,6 @@ public class DialogCompany extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;

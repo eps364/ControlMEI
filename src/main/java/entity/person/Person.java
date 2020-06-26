@@ -26,9 +26,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "person")
+@Table(name = "Person")
 @NamedQueries({
-    @NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p")})
+    @NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p"),
+    @NamedQuery(name = "Person.findDType", query = "SELECT p FROM Person p where p.dType =:dtype")
+})
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Person implements Serializable, InterValueId {
 
@@ -50,11 +52,8 @@ public class Person implements Serializable, InterValueId {
     @Temporal(TemporalType.DATE)
     private Date dateBirth;
 
-    @Column(name = "fantasyName")
-    private String fantasyName;
-
-    @Column(name = "companyName")
-    private String companyName;
+    @Column(name = "personName")
+    private String personName;
 
     @Column(name = "phone")
     private String phone;
@@ -82,6 +81,9 @@ public class Person implements Serializable, InterValueId {
 
     @Column(name = "cityName")
     private String cityName;
+
+    @Column(name = "dtype")
+    private String dType;
 
     @JoinColumn(name = "personStateId", referencedColumnName = "stateCode")
     @ManyToOne(optional = false)
@@ -125,20 +127,12 @@ public class Person implements Serializable, InterValueId {
         this.dateBirth = dateBirth;
     }
 
-    public String getFantasyName() {
-        return fantasyName;
+    public String getPersonName() {
+        return personName;
     }
 
-    public void setFantasyName(String fantasyName) {
-        this.fantasyName = fantasyName;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setPersonName(String companyName) {
+        this.personName = companyName;
     }
 
     public boolean getPersonStatus() {
@@ -229,6 +223,10 @@ public class Person implements Serializable, InterValueId {
         this.state = state;
     }
 
+    public String getdType() {
+        return dType;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -247,9 +245,8 @@ public class Person implements Serializable, InterValueId {
 
     @Override
     public String toString() {
-        return this.companyName;
+        return this.personName;
     }
-
 
     public Collection<Sale> getSaleCollection() {
         return saleCollection;
